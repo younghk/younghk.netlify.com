@@ -115,8 +115,21 @@ module.exports = {
             options: { wrapperStyle: 'margin-bottom: 1.0725rem' },
           },
           'gatsby-remark-prismjs',
-          'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+                // Add any KaTeX options from https://github.com/KaTeX/KaTeX/blob/master/docs/options.md here
+                strict: `ignore`
+            }
+          },
+          {
+            resolve: `gatsby-remark-copy-linked-files`,
+            options: {
+              ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+              destinationDir: "linked-file"
+            }
+          },
         ],
       },
     },

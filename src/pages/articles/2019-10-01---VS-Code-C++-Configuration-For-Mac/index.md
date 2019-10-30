@@ -4,7 +4,7 @@ date: "2019-10-01T23:20:00.1234"
 layout: post
 path: "/posts/VS-Code-C++-Configuration-For-Mac/"
 draft: false
-category: "Configuration"
+category: "ETC"
 tags:
   - "Mac"
   - "VS Code"

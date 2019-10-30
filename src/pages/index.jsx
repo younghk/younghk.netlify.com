@@ -5,6 +5,8 @@ import Layout from '../components/Layout'
 import Post from '../components/Post'
 import Sidebar from '../components/Sidebar'
 
+import config from '../../config';
+
 class IndexRoute extends React.Component {
   render() {
     const items = []
@@ -20,6 +22,8 @@ class IndexRoute extends React.Component {
           <Helmet>
             <title>{title}</title>
             <meta name="description" content={subtitle} />
+            {/* Global Site Tag (gtag.js) - Google Analytics */}
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${config.googleAnalyticsTrackingId}`} />
           </Helmet>
           <Sidebar {...this.props} />
           <div className="content">

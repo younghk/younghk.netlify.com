@@ -43,6 +43,13 @@
             margin-left: 15px;
             margin-right: 15px;
             @include margin-bottom(1);
+            & pre {
+                font-size: 0.9rem;
+                
+                & > code a{
+                    background-color: rgb(218, 180, 179);
+                }
+            }
         }
         & :not(div) {
             max-width: $layout-post-single-width;

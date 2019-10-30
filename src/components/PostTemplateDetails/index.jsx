@@ -4,6 +4,10 @@ import moment from 'moment'
 import Disqus from '../Disqus/Disqus'
 import './style.scss'
 
+//import "katex/dist/katex.min.css";
+
+require(`katex/dist/katex.min.css`)
+
 class PostTemplateDetails extends React.Component {
   render() {
     const { subtitle, author } = this.props.data.site.siteMetadata
@@ -13,7 +17,7 @@ class PostTemplateDetails extends React.Component {
     const homeBlock = (
       <div>
         <Link className="post-single__home-button" to="/">
-          All Articles
+          Home
         </Link>
       </div>
     )
@@ -64,13 +68,6 @@ class PostTemplateDetails extends React.Component {
             <hr />
             <p className="post-single__footer-text">
               {subtitle}
-              <a
-                href={`https://twitter.com/${author.twitter}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <br /> <strong>{author.name}</strong> on Twitter
-              </a>
             </p>
             {commentsBlock}
           </div>
