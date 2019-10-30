@@ -1,6 +1,8 @@
 const lost = require('lost')
 const pxtorem = require('postcss-pxtorem')
 
+const config = require('./config');
+
 const url = 'https://cheong.netlify.com'
 
 module.exports = {
@@ -137,7 +139,7 @@ module.exports = {
     'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-plugin-google-analytics',
-      options: { trackingId: 'UA-136078306-1' },
+      options: { trackingId: config.googleAnalyticsTrackingId },
     },
     {
       resolve: 'gatsby-plugin-google-fonts',

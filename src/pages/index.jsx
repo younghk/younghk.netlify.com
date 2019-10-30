@@ -19,11 +19,30 @@ class IndexRoute extends React.Component {
     return (
       <Layout>
         <div>
-          <Helmet>
-            <title>{title}</title>
-            <meta name="description" content={subtitle} />
+          <Helmet 
+            title={data.site.siteMetadata.title}
+            meta={[
+              { name: 'description', content: config.description },
+              { name: 'og:type', content: 'website' },
+              { name: 'og:title', content: config.title },
+              { name: 'og:description', content: config.description },
+              { name: 'og:image', content: config.titleLogo() },
+              { name: 'og:url', content: siteUrl },
+            ]}>
+            {/* html lang set */}
+            <html lang="ko" />
+            {/* load google font */}
+            <link href={`https://fonts.googleapis.com/css?family=${googleFontString}`} rel="stylesheet" />
             {/* Global Site Tag (gtag.js) - Google Analytics */}
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${config.googleAnalyticsTrackingId}`} />
+            <script>
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${config.googleAnalyticsTrackingId}');
+              `}
+            </script>
           </Helmet>
           <Sidebar {...this.props} />
           <div className="content">
