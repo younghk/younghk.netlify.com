@@ -20,7 +20,7 @@ class IndexRoute extends React.Component {
       <Layout>
         <div>
           <Helmet 
-            title={data.site.siteMetadata.title}
+            title={title}
             meta={[
               { name: 'description', content: config.description },
               { name: 'og:type', content: 'website' },

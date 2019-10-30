@@ -8,4 +8,4 @@ npm-debug.log
 gatsby-starter-lumen.iml
 
 # shell script
-.sh
+*.sh
