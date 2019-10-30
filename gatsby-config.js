@@ -1,20 +1,20 @@
 const lost = require('lost')
 const pxtorem = require('postcss-pxtorem')
 
-const url = 'https://lumen.netlify.com'
+const url = 'https://cheong.netlify.com'
 
 module.exports = {
   siteMetadata: {
     url,
     siteUrl: url,
-    title: 'Blog by John Doe',
+    title: 'Cheong',
     subtitle:
-      'Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu.',
-    copyright: '© All rights reserved.',
-    disqusShortname: '',
+      'Live, Lovely',
+    copyright: 'Cheong © All rights reserved.',
+    disqusShortname: 'cheong-netlify-com',
     menu: [
       {
-        label: 'Articles',
+        label: 'Posts',
         path: '/',
       },
       {
@@ -27,13 +27,10 @@ module.exports = {
       },
     ],
     author: {
-      name: 'John Doe',
+      name: 'Cheong',
       email: '#',
-      telegram: '#',
-      twitter: '#',
       github: '#',
       rss: '#',
-      vk: '#',
     },
   },
   plugins: [
@@ -124,7 +121,7 @@ module.exports = {
     'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-plugin-google-analytics',
-      options: { trackingId: 'UA-73379983-2' },
+      options: { trackingId: 'UA-136078306-1' },
     },
     {
       resolve: 'gatsby-plugin-google-fonts',
