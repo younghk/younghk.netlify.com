@@ -11,6 +11,9 @@ import config from '../../../config';
 
 class Layout extends React.Component {
   render() {
+    // check window
+    const module = typeof window !== `undefined` ? require("module") : null
+
     const { children } = this.props
     let siteUrl = window.location.href;
     //location ? (siteUrl = location.href) : (siteUrl = config.siteUrl);
