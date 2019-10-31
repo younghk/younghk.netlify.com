@@ -6,13 +6,14 @@ import favicon from '../../assets/favicon/favicon.ico'
 import { googleFontString } from '../../utils/typography';
 import { FontAwesomeIcon as Fa } from '@fortawesome/react-fontawesome';
 import { faHome, faTags, faSearch } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import config from '../../../config';
 
 class Layout extends React.Component {
   render() {
     const { children } = this.props
-    let siteUrl;
-    location ? (siteUrl = location.href) : (siteUrl = config.siteUrl);
+    let siteUrl = window.location.href;
+    //location ? (siteUrl = location.href) : (siteUrl = config.siteUrl);
     return (
       <div className="layout">
         <Helmet defaultTitle="Cheong"

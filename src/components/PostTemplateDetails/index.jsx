@@ -7,9 +7,9 @@ import './style.scss'
 import throttle from 'lodash/throttle';
 import kebabCase from 'lodash/kebabCase'
 
-//import "katex/dist/katex.min.css";
+import "katex/dist/katex.min.css";
 
-require(`katex/dist/katex.min.css`)
+//require(`katex/dist/katex.min.css`)
 
 class PostTemplateDetails extends React.Component {
 
@@ -51,16 +51,23 @@ class PostTemplateDetails extends React.Component {
 
   CopyMaker = {
     makeCopyButton() {
-      const code_blocks = document.body.querySelectorAll('.gatsby-highlight > .language-text');
-      code_blocks.forEach(code_block => {
+      const codeBlocks = document.body.querySelectorAll('pre > code');
+      codeBlocks.forEach(codeBlock => {
         const button = document.createElement('button');
-        button.innerHTML = 'copy';
-        button.className = "copy-button";
-        button.onclick = this._cpoy;
-        code_block.insertAdjacentElement('afterbegin', button)
+        button.innerText = 'copy';
+        button.className = "copy-code-button";
+        button.onclick = this._copy;
+        var pre = codeBlock.parentNode;
+        if (pre.parentNode.classList.contains('highlight')) {
+          var highlight = pre.parentNode;
+          highlight.parentNode.insertBefore(button, highlight);
+        } else {
+          pre.parentNode.insertBefore(button, pre);
+        }
+        //codeBlock.insertAdjacentElement('afterbegin', button)
       })
     },
-    _cpoy: (e) => {
+    _copy: (e) => {
       const target = e.target.nextSibling;
       let range, select;
 
@@ -71,11 +78,13 @@ class PostTemplateDetails extends React.Component {
         select.removeAllRanges();
         select.addRange(range);
         document.execCommand('copy');
+        select.removeAllRanges();
       } else {
         range = document.body.createTextRange();
         range.moveToElementText(target);
         range.select();
         document.execCommand('copy');
+        select.removeAllRanges();
       }
     }
   }
