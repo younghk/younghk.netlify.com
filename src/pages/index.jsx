@@ -4,8 +4,8 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Post from '../components/Post'
 import Sidebar from '../components/Sidebar'
-import { googleFontString } from '../utils/typography';
 
+import { googleFontString } from '../utils/typography';
 import config from '../../config';
 
 class IndexRoute extends React.Component {
@@ -16,6 +16,9 @@ class IndexRoute extends React.Component {
     posts.forEach(post => {
       items.push(<Post data={post} key={post.node.fields.slug} />)
     })
+
+    let siteUrl;
+    location ? (siteUrl = location.href) : (siteUrl = config.siteUrl);
 
     return (
       <Layout>
