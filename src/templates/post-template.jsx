@@ -54,6 +54,13 @@ export const pageQuery = graphql`
         tags
         date
         description
+        path
+        category
+      }
+      tableOfContents
+      headings {
+        value
+        depth
       }
     }
   }
