@@ -2,10 +2,18 @@
 @import "../../assets/scss/mixins";
 
 .post {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 2px 0 rgba(46, 62, 72, 0.12), 0 2px 4px 0 rgba(46, 62, 72, 0.12);
     @include margin-bottom(1.25);
     &:last-child {
         @include margin-bottom(.5);
     }
+    &__thumbnail {
+      border-radius: 8px 8px 0px 0px;
+      display: flex;
+      justify-content: center;
+    }  
     &__title {
         font-size: $typographic-base-font-size * 1.6875;
         @include line-height(1.5);

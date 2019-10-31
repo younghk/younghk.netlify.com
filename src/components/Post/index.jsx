@@ -5,6 +5,9 @@ import './style.scss'
 
 class Post extends React.Component {
   render() {
+    const { fileAbsolutePath } = this.props.data.node
+    //const postPath = fileAbsolutePath.match(/pages\/[\w|\W]{1,}(?=index.md)/)
+    
     const {
       title,
       date,
@@ -13,8 +16,20 @@ class Post extends React.Component {
     } = this.props.data.node.frontmatter
     const { slug, categorySlug } = this.props.data.node.fields
 
+    let thumbnail
+
+    try {
+      thumbnail = slug && require('../../' + slug + 'thumbnail.jpg');
+    } catch{
+      thumbnail = ''
+    }
     return (
       <div className="post">
+        <div className="post__thumbnail">
+          <Link className="post__title-link" to={slug}>
+            <img src={thumbnail} />
+          </Link>
+        </div>
         <div className="post__meta">
           <time
             className="post__meta-time"
@@ -35,9 +50,11 @@ class Post extends React.Component {
           </Link>
         </h2>
         <p className="post__description">{description}</p>
+        {/*
         <Link className="post__readmore" to={slug}>
           Read
         </Link>
+        */}
       </div>
     )
   }

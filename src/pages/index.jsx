@@ -5,9 +5,6 @@ import Layout from '../components/Layout'
 import Post from '../components/Post'
 import Sidebar from '../components/Sidebar'
 
-import { googleFontString } from '../utils/typography';
-import config from '../../config';
-
 class IndexRoute extends React.Component {
   render() {
     const items = []
@@ -16,37 +13,15 @@ class IndexRoute extends React.Component {
     posts.forEach(post => {
       items.push(<Post data={post} key={post.node.fields.slug} />)
     })
-
-    let siteUrl;
-    location ? (siteUrl = location.href) : (siteUrl = config.siteUrl);
+    const location = this.props.location;
+    
 
     return (
-      <Layout>
+      <Layout location={location}>
         <div>
-          <Helmet 
-            title={title}
-            meta={[
-              { name: 'description', content: config.description },
-              { name: 'og:type', content: 'website' },
-              { name: 'og:title', content: config.title },
-              { name: 'og:description', content: config.description },
-              { name: 'og:image', content: config.titleLogo() },
-              { name: 'og:url', content: siteUrl },
-            ]}>
-            {/* html lang set */}
-            <html lang="ko" />
-            {/* load google font */}
-            <link href={`https://fonts.googleapis.com/css?family=${googleFontString}`} rel="stylesheet" />
-            {/* Global Site Tag (gtag.js) - Google Analytics */}
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${config.googleAnalyticsTrackingId}`} />
-            <script>
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${config.googleAnalyticsTrackingId}');
-              `}
-            </script>
+          <Helmet>
+            <title>{title}</title>
+            <meta name="description" content={subtitle} />
           </Helmet>
           <Sidebar {...this.props} />
           <div className="content">

@@ -4,6 +4,7 @@
 
 html {
     font-size: $typographic-root-font-size;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -88,7 +89,7 @@ hr {
     margin-left: auto;
     background-size: 100% 26px;
     background-image: linear-gradient(to bottom, transparent 1px, transparent 11px, $color-base 11px, $color-base 15px, transparent 15px, transparent 26px);
-    width: 100px;
+    //width: 100px;
 }
 
 a {
@@ -107,7 +108,7 @@ strong {
 }
 
 ul {
-    list-style: square;
+    list-style: circle;
     @include margin-bottom(1);
     & li {
         padding: 0 5px;

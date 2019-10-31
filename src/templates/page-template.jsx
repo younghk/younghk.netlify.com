@@ -58,5 +58,26 @@ export const pageQuery = graphql`
         description
       }
     }
+    allMarkdownRemark(
+      limit: 1000
+      filter: { frontmatter: { layout: { eq: "post" }, draft: { ne: true } } }
+      sort: { order: DESC, fields: [frontmatter___date] }
+    ) {
+      edges {
+        node {
+          fileAbsolutePath
+          fields {
+            slug
+            categorySlug
+          }
+          frontmatter {
+            title
+            date
+            category
+            description
+          }
+        }
+      }
+    }
   }
 `

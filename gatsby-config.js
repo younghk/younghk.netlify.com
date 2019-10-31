@@ -27,6 +27,34 @@ module.exports = {
         label: 'Contact me',
         path: '/contact/',
       },
+      {
+        label: 'Categories',
+        path: '/categories/',
+        
+        sub_menu: [
+          {
+            label: 'blog',
+            path: '/blog/',
+          },
+          {
+            label: 'java',
+            path: '/java/',
+          },
+          {
+            label: 'css',
+            path: '/css/',
+          },
+          {
+            label: 'js',
+            path: '/js/',
+          },
+        ]
+        
+      },
+      {
+        label: 'Tags',
+        path: '/tags',
+      },
     ],
     author: {
       name: 'Cheong',

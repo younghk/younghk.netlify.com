@@ -6,6 +6,8 @@ import Links from '../Links'
 import profilePic from '../../pages/profile.png'
 import './style.scss'
 
+import kebabCase from 'lodash/kebabCase'
+
 class Sidebar extends React.Component {
   render() {
     const { location } = this.props
