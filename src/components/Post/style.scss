@@ -13,9 +13,10 @@
       border-radius: 8px 8px 0px 0px;
       display: flex;
       justify-content: center;
-    }  
+    }
+    padding: 20px;
     &__title {
-        font-size: $typographic-base-font-size * 1.6875;
+        //font-size: $typographic-base-font-size * 1.6875;
         @include line-height(1.5);
         @include margin-top(0);
         @include margin-bottom(.5);
@@ -30,6 +31,7 @@
     }
     &__description {
         font-size: $typographic-base-font-size;
+        color: $color-base;
         @include line-height(1);
         @include margin-bottom(.75);
     }

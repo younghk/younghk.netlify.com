@@ -15,7 +15,6 @@ class IndexRoute extends React.Component {
     })
     const location = this.props.location;
     
-
     return (
       <Layout location={location}>
         <div>
@@ -64,6 +63,8 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          excerpt
+          fileAbsolutePath
           fields {
             slug
             categorySlug
