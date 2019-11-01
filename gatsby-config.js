@@ -109,6 +109,7 @@ module.exports = {
                 ) {
                   edges {
                     node {
+                      excerpt
                       html
                       fields {
                         slug
@@ -126,6 +127,8 @@ module.exports = {
               }
             `,
             output: '/rss.xml',
+            title: "Cheong\'s RSS Feed",
+            match: "^/posts/",
           },
         ],
       },
