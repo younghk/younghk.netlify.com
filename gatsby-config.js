@@ -3,7 +3,7 @@ const pxtorem = require('postcss-pxtorem')
 
 const config = require('./config');
 
-const url = 'https://cheong.netlify.com'
+const url = `https://cheong.netlify.com`
 
 module.exports = {
   siteMetadata: {
@@ -182,7 +182,7 @@ module.exports = {
             {
               site {
                 siteMetadata {
-                  url
+                  siteUrl
                 }
               }
               allSitePage(
@@ -201,7 +201,7 @@ module.exports = {
         serialize: ({ site, allSitePage }) =>
           allSitePage.edges.map(edge => {
             return {
-              url: site.siteMetadata.url + edge.node.path,
+              url: site.siteMetadata.siteUrl + edge.node.path,
               changefreq: 'daily',
               priority: 0.7,
             }

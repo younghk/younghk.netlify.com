@@ -4,9 +4,16 @@ import moment from 'moment'
 import './style.scss'
 
 class Post extends React.Component {
+  
   render() {
     const { fileAbsolutePath } = this.props.data.node
-    const postPath = fileAbsolutePath.match(/pages\/articles\/[\w|\W]{1,}\/(?=[2|index.md])/);
+    let postPath;
+    try {
+      postPath = fileAbsolutePath.match(/pages\/articles\/[\w|\W]{1,}\/(?=[2|index.md])/);
+    } catch {
+      postPath = '';
+    }
+    //const postPath = fileAbsolutePath.match(/pages\/articles\/[\w|\W]{1,}\/(?=[2|index.md])/);
      
     let thumbnail
     const defaultThumbnailPath = '';
