@@ -13,7 +13,7 @@ let config = {
     bioShow: true,
   
     // # Addtional
-    googleAnalyticsTrackingId: 'UA-136078306-1',
+    googleAnalyticsTrackingId: 'UA-136078306-2',
     disqusShortname: 'cheong-netlify-com',
   
     // ## google AdSense
