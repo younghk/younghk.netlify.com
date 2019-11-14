@@ -3,7 +3,7 @@ draft: false
 title: "Advanced Encryption Standard"
 date: "2019-10-12T02:43:00.1234"
 layout: post
-path: "/posts/Advanced-Encryption-Standard/"
+path: "/posts/advanced-encryption-standard/"
 category: "Information Security"
 description: ""
 tags:

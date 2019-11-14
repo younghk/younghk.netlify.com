@@ -2,7 +2,7 @@
 title: "[BOJ 17503] 맥주 축제"
 date: "2019-10-02T01:31:00.1234"
 layout: post
-path: "/posts/BOJ-17503/"
+path: "/posts/boj-17503/"
 draft: false
 category: "BOJ"
 tags:

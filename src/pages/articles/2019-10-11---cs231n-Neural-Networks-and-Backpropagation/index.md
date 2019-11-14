@@ -3,7 +3,7 @@ draft: false
 title: "[cs231n-lec4] Neural Networks and Backpropagation"
 date: "2019-10-11T02:30:00.1234"
 layout: post
-path: "/posts/cs231n-lec4-Neural-Networks-and-Backpropagation/"
+path: "/posts/cs231n-lec4-neural-networks-and-backpropagation/"
 category: "Machine Learning"
 description: ""
 tags:

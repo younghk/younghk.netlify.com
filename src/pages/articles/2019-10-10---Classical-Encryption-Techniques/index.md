@@ -2,7 +2,7 @@
 draft: false
 title: "Classical Encryption Techniques"
 date: "2019-10-10T02:19:00.1234"
-path: "/posts/Classical-Encryption-Techniques/"
+path: "/posts/classical-encryption-techniques/"
 layout: post
 category: "Information Security"
 description: ""

@@ -3,7 +3,7 @@ draft: false
 title: "Block Cipher Operation"
 date: "2019-10-15T03:06:00.1234"
 layout: post
-path: "/posts/Block-Cipher-Operation/"
+path: "/posts/block-cipher-operation/"
 category: "Information Security"
 description: ""
 tags:

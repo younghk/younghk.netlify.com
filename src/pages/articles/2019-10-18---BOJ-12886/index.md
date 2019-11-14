@@ -3,7 +3,7 @@ draft: false
 title : "[BOJ 12886] 돌 그룹"
 date : "2019-10-18T03:08:00.1234"
 layout: post
-path: "/posts/BOJ-12886/"
+path: "/posts/boj-12886/"
 category: "BOJ"
 description: ""
 tags :

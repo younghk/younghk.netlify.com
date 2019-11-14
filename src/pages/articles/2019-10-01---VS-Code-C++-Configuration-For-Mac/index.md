@@ -2,7 +2,7 @@
 title: "맥에서 VS Code C++ 빌드 설정하기"
 date: "2019-10-01T23:20:00.1234"
 layout: post
-path: "/posts/VS-Code-C++-Configuration-For-Mac/"
+path: "/posts/vs-code-c++-configuration-for-mac/"
 draft: false
 category: "ETC"
 tags:

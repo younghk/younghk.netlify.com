@@ -3,7 +3,7 @@ title: "[BOJ 2125] Mothy"
 date: "2019-10-09T02:11:00.1234"
 draft: false
 layout: post
-path: "/posts/BOJ-2125/"
+path: "/posts/boj-2125/"
 category: "BOJ"
 tags:
   - PS

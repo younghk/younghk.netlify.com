@@ -3,7 +3,7 @@ draft: false
 title: "[cs231n-lec5] Convolutional Neural Networks"
 date: "2019-10-12T02:47:00.1234"
 layout: post
-path: "/posts/cs231n-lec5-Convolutional-Nerual-Networks/"
+path: "/posts/cs231n-lec5-convolutional-nerual-networks/"
 category: "Machine Learning"
 tags:
   - cs231n

@@ -3,7 +3,7 @@ draft: false
 title: "Markdown을 써보자"
 date: "2019-10-04T17:03:00.1234"
 layout: post
-path: "/posts/Markdown-Usage/"
+path: "/posts/markdown-usage/"
 category: "ETC"
 tags:
   - Markdown
