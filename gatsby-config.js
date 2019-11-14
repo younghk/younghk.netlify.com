@@ -74,7 +74,7 @@ module.exports = {
         name: 'pages',
       },
     },
-    {
+    /*{
       resolve: 'gatsby-plugin-feed',
       options: {
         query: `
@@ -132,7 +132,7 @@ module.exports = {
           },
         ],
       },
-    },
+    },*/
     {
       resolve: 'gatsby-transformer-remark',
       options: {
@@ -178,7 +178,8 @@ module.exports = {
         fonts: ['roboto:400,400i,500,700'],
       },
     },
-    {
+    `gatsby-plugin-sitemap`,
+    /*{
       resolve: 'gatsby-plugin-sitemap',
       options: {
         query: `
@@ -210,7 +211,7 @@ module.exports = {
             }
           }),
       },
-    },
+    },*/
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
