@@ -43,6 +43,8 @@ with open(f_dir, 'w') as f:
     f.write('\n')
     f.write('tags: ')
     f.write('\n')
+    f.write('description: ""')
+    f.write('\n')
     f.write('---')
     f.write('\n')
 
