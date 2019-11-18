@@ -12,7 +12,7 @@ import "katex/dist/katex.min.css";
 //require(`katex/dist/katex.min.css`)
 
 class PostTemplateDetails extends React.Component {
-
+  /* Table of Contents */
   HeaderManager = {
     tocHeader: [],
     postHeader: [],
@@ -49,6 +49,7 @@ class PostTemplateDetails extends React.Component {
     }
   }
 
+  /* copy button for code block */
   CopyMaker = {
     makeCopyButton() {
       const codeBlocks = document.body.querySelectorAll('pre > code');

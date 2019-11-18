@@ -140,7 +140,11 @@
           margin-left: 1.5rem;
         }
         & li > ul {
-            margin-left: 1.5rem;
+          margin-left: 1.5rem;
+        }
+
+        & img {
+            padding: 1rem 1rem;
         }
     }
     &__footer {
