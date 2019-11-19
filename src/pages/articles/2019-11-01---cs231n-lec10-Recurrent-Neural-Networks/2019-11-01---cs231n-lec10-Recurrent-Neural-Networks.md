@@ -300,6 +300,9 @@ _Visual Question Answering_ 에서는 이미지와 질문이라는 두 개의 �
 
 위 이미지는 4개의 cell 에 대해서만 보여주고 있으나 cell 이 늘어나고 곱해지는 값이 1보다 크거나 1보다 작을 경우 각각 exploding 과 vanishing 의 문제가 발생하게 된다. 커지는 것은 막아본다 치더라도(gradient clipping) 작아지는 것은 결국 gradient vanishing 을 일으키게 된다.  
 
+여기서 gradient clipping 은 gradient 의 L2 norm 이 기준값을 초과할 경우 threshold/L2 norm 을 곱해주는 것이다.
+
+
 ![vanilla gradient flow with backpropagation 2](./image46.png)
 
 즉 RNN 의 구조를 바꾸는 방법이 필요하게 된다.  
@@ -340,7 +343,28 @@ $c_t$ 의 수식을 해석해보면 이전 cell state($c_{t-1}$)를 계속 기�
 ($i \times g$), 즉 cell state 의 각 요소는 scaler integer counters 처럼 값이 줄었다 늘었다 하는 것으로 볼 수 있다. cell state 를 계산했다면 이제 internal state 를 업데이트 할 차례다. $h_t$ 는 실제 밖으로 보여지는 값이므로 cell state 는 counters 의 개념으로 해석할 수 있다. 즉, 각 스텝마다 최대 +1 또는 -1 씩 세는 것이다.
 
 ![lstm gradient flow](./image49.png)
+
+여기서 forget gate 의 elementwise multiplication 이 full matrix multiplication 보다 효율적이기 때문에 더 좋다는 것을 알 수 있고, 이 elementwise multiplication 이 각각의 time step 에 대해 다른 forget gate 로 곱해지게 되므로 exploding 또는 vanishing 문제를 피하는 이점이 생기게 된다.  
+이는 sigmoid 로 출력이 되기 때문에 0 ~ +1 사이의 값이 나오게 된다.
+
 ![lstm gradient flow 2](./image50.png)
+
+bias 를 forget gate 에 줘서 1에 가깝게 만든다면, 이를 통해 vanishing gradient 를 방지할 수 있다. 물론 여전히 vanishing gradient 가 생길 수는 있으나 vanilla RNN 에 비하면 그 정도가 많이 약화된다.
+
+forget gate 가 매번 달라지기 때문에 vanishing gradient 문제가 발생하지 않는다.  
+
+여기서 네트워크의 고속도로(highway networks)로 gradient 를 위한 빠른 처리가 가능하게 된다. 이는 마치 _ResNet_ 의 residual block 과 비슷하다.  
+
+( + 연산은 gradient 에 대해 distribute 하는 역할을 하게 되는데 이는 backpropagation 을 하는데 있어서 아주 빠르게 계산이 되는 부분이기 때문에 highway 라고 표현할 수 있다.)
+
 ![other rnn varients](./image51.png)
+
+GRU(gated recurrent unit) 와 LSTM 이 현재까지 나온 것들 중 적당한 성능을 보이고 있다.
+GRU 는 LSTM 과 같이 굉장히 많이 사용되는 모델이다. cell state  없이 internal state 만 있는 것인데 자세한 것은 논문을 읽어보자!  
+
+(구글에서 random RNN 으로 아주 많이 다양하게 테스트해봤지만 눈에 띄게 우세한 새로운 구조는 아직까지 없었다고 한다.)  
+
+GRU 나 LSTM 에서 보여주는 gradient control 은 아주 유용한 방법이다.  
+
 ![recent nlp](./image52.png)
 
