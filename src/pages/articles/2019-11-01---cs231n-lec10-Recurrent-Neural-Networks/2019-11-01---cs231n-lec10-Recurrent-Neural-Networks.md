@@ -1,7 +1,7 @@
 ---
 draft:     false
 title:     "[cs231n-lec10] Recurrent Neural Networks"
-date:      "2019-11-01T17:27:23"
+date:      "2019-11-01 17:27:23"
 layout:    post
 path:      "/posts/cs231n-lec10-Recurrent-Neural-Networks/"
 category:  "Machine Learning"
