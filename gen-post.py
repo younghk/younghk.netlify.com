@@ -8,7 +8,7 @@ post_name = input('Input Post Name: ')
 
 date_time = datetime.now()
 date_time_dir = date_time.strftime("%Y-%m-%d")
-date_time_post = date_time.strftime("%Y-%m-%dT%H:%M:%S")
+date_time_post = date_time.strftime("%Y-%m-%d %H:%M:%S")
 
 p_name = post_name.replace(" ","-")
 
@@ -33,7 +33,7 @@ with open(f_dir, 'w') as f:
     f.write('\n')
     f.write('title:     \"'+post_name+'\"')
     f.write('\n')
-    f.write('date:      \"'+date_time_post+'.131Z'+'\"')
+    f.write('date:      \"'+date_time_post+'\"')
     f.write('\n')
     f.write('layout:    post')
     f.write('\n')
