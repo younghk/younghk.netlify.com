@@ -12,3 +12,16 @@ Gatsby 정적 페이지 제작 프레임워크를 사용해 제작한 블로그.
 - gif 추가 가능([gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/?=copy-))
 
 ---
+
+Required Features  
+
+- [x] KaTeX (for mathematics representation)
+- [ ] image size
+- [ ] wide context view(for desktop)
+- [ ] gif loop infinity
+- [ ] About
+- [ ] RSS
+- [ ] hr tag
+- [x] image thumbnail  
+- [ ] Search page
+- [ ] paging  
