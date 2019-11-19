@@ -33,7 +33,7 @@ with open(f_dir, 'w') as f:
     f.write('\n')
     f.write('title:     \"'+post_name+'\"')
     f.write('\n')
-    f.write('date:      \"'+date_time_post+'131.Z'+'\"')
+    f.write('date:      \"'+date_time_post+'.131Z'+'\"')
     f.write('\n')
     f.write('layout:    post')
     f.write('\n')
