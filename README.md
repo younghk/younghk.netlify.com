@@ -4,6 +4,8 @@ Gatsby 정적 페이지 제작 프레임워크를 사용해 제작한 블로그.
 
 [gatsby v2 starter lumen](https://github.com/GatsbyCentral/gatsby-v2-starter-lumen)을 커스텀 하였습니다.
 
+[regyu.dev](https://www.regyu.dev) 사이트 디자인에 영감을 받아서 반영 후 추가 수정 중입니다.
+
 이전 [블로그](https://younghk.github.io/)를 확인하실 수 있습니다.
 
 - Google Analytics 적용
