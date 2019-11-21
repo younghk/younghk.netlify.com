@@ -14,7 +14,7 @@ tags:
 description: "스탠포드 cs231n lec-12 강의를 보고 정리한 포스트 입니다. detection 과 segmentation 에 대해 설명합니다. 2019년 강의노트를 기반으로 작성되었습니다."
 ---
 
-<small>최종 수정일 : 2019-11-21</small>
+<small>최종 수정일 : 2019-11-22</small>
 
 ## Computer Vision Tasks
 
