@@ -113,11 +113,31 @@ filter 의 크기와 stride 의 크기에 의해 overlap 되는 부분이 생기
 _Object Detection_ 은 _Classification + Localization_ 이라고 볼 수 있다.  
 이미지 안에 있는 객체를 분류하고 그 위치까지 판별해야하는 문제이고 그 위치를 범위로써 나타내야한다.
 
+이 때, localization 은 이미지 안에 물체가 하나만 있는 경우를 상정한다.
+
 ![object detection single object](./image15.png)
+
+_FC layer_ 가 하나 더 있는 것을 볼 수 있는데 이는 x, y, w, h 로 _bounding box_ 의 위치를 의미한다.  
+이로써 두 개의 값을 출력하게 되는데 하나는 class score 가 되고 나머지는 위의 bounding box 의 정보가 된다.  
+
+학습을 진행할 때는 두 loss 를 학습하게 되고 이것이 _Multitask Loss_ 가 된다.  
+
+이 때 _CNN_ 구조를 통과시키게 되는데 처음부터 학습하는 것은 쉽지 않고 효율적이지도 않으므로 보통 _ImageNet_ 의 pre-trained 모델을 사용한다.<small>앞서 배웠던 _transfer learning_ 을 상기하고 가자.</small>
 
 ![obejct detection multiple objects](./image16.png)
 
+_Object Detection_ 은 Computer Vision 에서 핵심적인 task 이다.  
+특히 우리는 이미지에 하나의 물체만 담지는 않으므로 보통의 이미지에는 다양한 물체들이 있을 수 있다.  
+
+앞서 보았던 _Localization_ 과의 차이점은 _Object Detection_ 에서는 Multiple Object 에 대해 작업을 수행한다는 것이다.  
+
+첫 이미지에서 보듯 고양이가 한 마리만 있는 이미지라면 bounding box 는 4개의 숫자로 이루어진 하나만 나오면 되겠지만,  
+두 번째 이미지에서 보듯 두 마리의 강아지와 한 마리의 고양이가 있다면 이는 세 배가 되게 될테고,  
+마지막 오리 사진을 본다면 정말 많이 필요하게 될 것이다.
+
 ![object detection multiple objects](./gif1.gif)
+
+
 
 ![obejct detection multiple objects](./image21.png)
 
