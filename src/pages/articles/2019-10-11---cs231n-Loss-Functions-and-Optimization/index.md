@@ -1,7 +1,7 @@
 ---
 draft: false
 title: "[cs231n-lec3] Loss Functions and Optimization"
-date: "2019-10-11T02:27:00.1234"
+date: "2019-10-11 02:23:14"
 layout: post
 path: "/posts/cs231n-lec3-loss-functions-and-optimization/"
 category: "Machine Learning"

@@ -3,7 +3,7 @@ draft:     false
 title:     "[cs231n-lec12] Detection and Segmentation"
 date:      "2019-11-19 17:05:52"
 layout:    post
-path:      "/posts/cs231n-lec12-Detection-and-Segmentation/"
+path:      "/posts/cs231n-lec12-detection-and-segmentation/"
 category:  "Machine Learning"
 tags: 
     - cs231n
@@ -94,15 +94,37 @@ _Transpose Convolution_ 은 위에서 진행된 과정의 반대이다. 입력�
 위에서는 내적(dot product)을 수행하였지만 여기서는 feature map 에서 값을 선택하고 선택한 scalar 값과 필터(3x3)를 곱해준다. 그리고 출력의 3x3 공간에 넣게된다.  
 filter 의 크기와 stride 의 크기에 의해 overlap 되는 부분이 생기게 되는데, 이 부분에 대해서는 summation 을 진행한다.
 
+_Transpose Convolution_ 을 어떤 논문들에서는 Deconvolution 이라고도 칭하는데, 이는 잘못된 것이다.  
+<small>이 부분에 대해서는 나중에 다시 정리하자!</small>
+
 ![learnable unpooling 1d example](./image11.png)
 
+이것은 1차원에서 learnable upsampling 의 예제를 보여주는 것이다.  
 
+겹치는 부분인 az 와 bx 를 더해준다. az + bx
 
 ![convolution as matrix multiplication 1d example](./image12.png)
 
+조금 더 자세한 예제를 살펴보자. 왜 이름에 convolution 이 붙는가?  
+
+convolution 연산은 행렬 곱 연산으로 나타날 수 있는데 위와 같이 계산이 될 수 있다.  
+<small>위 슬라이드에서 x,y,x 가 아니라 x,y,z 가 맞다.</small>  
+
+오른쪽은 왼쪽의 transpose conv 이다. 같은 행렬을 사용해서 행렬곱 연산을 수행했지만 transpose 를 취한 형태이다.  
+
+이렇게 되면 왼쪽은 stride 1 convolution 이고 오른쪽은 stride 1 transpose convolution 이 된다.  
+
+a vector($\vec{a}$)를 보면 4 개의 값으로 이루어져있는 것을 볼 수 있는데 이는 transpose 로 인한 것이다.
+
 ![convolution as matrix multiplication 1d example](./image13.png)
 
+stride 1 transpose convolution 의 모양을 보면 일반적인 convolution 과 비슷하다.  
+padding 을 고려하게 된다면 달라질 수 있긴 한데, stride 2 일 경우는 어떨까?  
 
+왼쪽이 바로 stride 2 convolution 의 행렬곱 연산이다.<small>stride 2 를 알 수 있는 이유는 x,y,z의 움직임이 한 칸이 아닌 두 칸인 것을 보면 알 수 있다.</small>  
+만약 stride 가 1 보다 커지게 될 경우 transpose convolution 은 convolution 이 아니게 된다. 그 표현이 어떻게 되는지 생각해보면 알 수 있다.  
+따라서, stride 2 가 되었을 경우 normal convolution 과는 다른 연산이 되게 되었다. 그래서 이름을 transpose convolution 이라 칭하게 되었다.  
+<small>여기서 a vector($\vec{a}$) 를 볼 때 transpose 만큼 값이 2개 뿐이다. 이것 때문인듯 싶다.</small>
 
 <small>이에 대한 보충자료는 [여기](https://medium.com/activating-robotic-minds/up-sampling-with-transposed-convolution-9ae4f2df52d0)에서 더 확인할 수 있다.</small>
 
@@ -135,53 +157,63 @@ _Object Detection_ 은 Computer Vision 에서 핵심적인 task 이다.
 두 번째 이미지에서 보듯 두 마리의 강아지와 한 마리의 고양이가 있다면 이는 세 배가 되게 될테고,  
 마지막 오리 사진을 본다면 정말 많이 필요하게 될 것이다.
 
-![object detection multiple objects](./gif1.gif)
+![object detection multiple objects with sliding windows](./gif1.gif)
 
-
+다른 모양의 crop 을 이용해 object 인지 background 인지 sliding window 기법을 통해 훑어서 판별을 해 볼 수 있다.  
 
 ![obejct detection multiple objects](./image21.png)
 
+그러나 앞에서 본 애니메이션의 경우는 아주 최적화된 순서라고 볼 수 있는데 실제 이미지에는 어느 위치에 어느 정도의 크기로 물체가 존재하게 될지 모르고, 이는 아주 많은 경우의 수를 시도해보아야 원하는 물체의 위치를 판별할 수 있게 되는 것이다.
+
+마치 위의 파란색 영역 같이 생각해 볼 수 있다.
+
 ![region proposals selective search](./image22.png)
+
+이를 해결하기 위해 deep learning 이전에서 사용했던 방법 중 하나인 _Selective Search_ 라는 기법이 있다.  
+물체가 있을 만한 '후보 영역'을 ~2000개 가량 생성해서 해당 위치만 물체인지 아닌지 판별하는 방식이다.  
+
+위의 아주 많은 경우의 수에 비해 연산량을 많이 줄이긴 했으나 여전히 2000개도 많은 영역이긴 하다.
 
 ## R-CNN
 
-![](./image23.png)
+![rcnn](./image23.png)
 
-![](./image24.png)
+![rcnn](./image24.png)
 
-![](./image25.png)
+![rcnn](./image25.png)
 
-![](./image26.png)
+![rcnn](./image26.png)
 
-![](./image27.png)
+![rcnn](./image27.png)
 
 ## Fast R-CNN
 
-![](./image28.png)
+![fast rcnn](./image28.png)
 
-![](./image29.png)
+![fast rcnn](./image29.png)
 
-![](./image30.png)
+![fast rcnn](./image30.png)
 
 ### RoI Pool
 
-![](./image31.png)
+![cropping features roi pool](./image31.png)
 
-![](./image32.png)
+![cropping features roi pool](./image32.png)
 
-![](./image33.png)
+![cropping features roi pool](./image33.png)
 
-![](./image34.png)
 
 ### RoI Align
 
-![](./image35.png)
+![cropping features roi align](./image34.png)
 
-![](./image36.png)
+![cropping features roi align](./image35.png)
 
-![](./image37.png)
+![cropping features roi align](./image36.png)
 
-![](./image38.png)
+![cropping features roi align](./image37.png)
+
+![rcnn vs fast rcnn](./image38.png)
 
 ## Faster R-CNN
 

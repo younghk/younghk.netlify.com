@@ -11,6 +11,9 @@ date_time_dir = date_time.strftime("%Y-%m-%d")
 date_time_post = date_time.strftime("%Y-%m-%d %H:%M:%S")
 
 p_name = post_name.replace(" ","-")
+p_name = p_name.replace("[","")
+p_name = p_name.replace("]","")
+p_name = p_name.lower()
 
 f_name = date_time_dir+"---"+p_name
 dir = "./src/pages/articles/"+f_name+"/"

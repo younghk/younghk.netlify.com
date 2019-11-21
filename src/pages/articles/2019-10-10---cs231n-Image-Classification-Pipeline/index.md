@@ -1,7 +1,7 @@
 ---
 draft: false
 title: "[cs231n-lec2] Image Classification Pipeline"
-date: "2019-10-10T02:20:00.1234"
+date: "2019-10-10 02:20:00"
 path: "/posts/cs231n-lec2-image-classification-pipeline/"
 layout: post
 category: "Machine Learning"
