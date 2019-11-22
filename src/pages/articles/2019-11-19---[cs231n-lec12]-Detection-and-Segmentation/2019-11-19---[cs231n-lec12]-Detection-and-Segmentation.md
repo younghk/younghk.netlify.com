@@ -176,100 +176,253 @@ _Object Detection_ 은 Computer Vision 에서 핵심적인 task 이다.
 
 ## R-CNN
 
+고전적인 방법으로 _Object Detection_ 을 수행했을 때 성능은 그리 좋지 않았다. 그러다가 _CNN_ 기법을 이용한 _Object Detection_ 이 등장하게 되었는데, 차례로 살펴보자.
+
 ![rcnn](./image23.png)
+
+_R-CNN_ 은 _CNN_ 기법을 _Object Detection_ 에 최초로 접목시킨 모델이다.  
+Selective Search 를 이용해 ~2k 개의 region proposal(bouding box) 을 생성한다.  
 
 ![rcnn](./image24.png)
 
+이 영역들의 크기는 각기 다르므로 모두 동일한 size 를 갖게 crop & warp 를 진행한다.  
+
+$224 \times 224$ 의 크기로 만들게 된다.
+
 ![rcnn](./image25.png)
+
+이제 이 이미지들을 ConvNet 에 통과시키게 된다.  
+
+그 후 나온 결과를 SVM 을 통해 분류하게 된다.
 
 ![rcnn](./image26.png)
 
+이렇게 나온 결과는 bounding box 가 정확하지 않기 때문에 regression 을 통해 조정을 하여 정확한 영역을 계산하도록 한다.
+
 ![rcnn](./image27.png)
+
+이는 굉장히 느린데(K40 으로 training 에 84시간) 이는 각각의 이미지가 ConvNet 을 통과하는데 엄청난 연산이 필요하기 때문이다.  
+
+다행히 이 느린 _R-CNN_ 의 문제를 해결하기 위한 방법이 있다.  
+각각의 이미지를 ConvNet 에 넣는 것 말고 convolution 과 $224 \times 224$ 의 이미지를 얻는 순서를 바꾸는 것이다.
 
 ## Fast R-CNN
 
 ![fast rcnn](./image28.png)
 
+_Fast R-CNN_ 에서는 backbone network 로 AlexNet, VGG, ResNet 등을 사용하였으며 input image 를 한번에 ConvNet 에 넣게 된다. 이를 통해 feature map 을 먼저 얻을 수 있고 여기서 region proposal 을 진행하게 되는데, _Fast R-CNN_ 에서는 [__RoI Pool__](#roi-pool) 이라는 개념을 도입했다.
+
+<small>필기가 되어있네..?</small>
+
 ![fast rcnn](./image29.png)
 
+이렇게 얻은 후보 영역들에 대해 crop + resize 를 진행하게 되고,
+
 ![fast rcnn](./image30.png)
+
+_CNN_ 구조에 후보 영역들을 통과시켜서 물체의 분류는 linear + softmax 로, box offset 은 linear 로 처리하여 계산한다.
+
+<a name="roi-pool"></a>
 
 ### RoI Pool
 
 ![cropping features roi pool](./image31.png)
 
+_Fast R-CNN_ 에서 region proposal 을 수행하기 위해 도입한 _RoI Pool_ 에 대해서 알아보자.  
+
+먼저 이미지를 _CNN_ 에 통과시켜 격자화된 feature map 을 얻는다.  
+
+그리고 여기서 해당 물체가 있는 박스를 grid 상에 위치시킨다.
+
 ![cropping features roi pool](./image32.png)
+
+grid 는 현재 격자화된 상태이기 때문에 박스를 snap 하여 grid 의 격자에 맞춰 위치시킨다.
 
 ![cropping features roi pool](./image33.png)
 
+이를 적당히 4등분(rougly equal subregion)하여 max-pool 을 진행하면 2 by 2 region 이 새롭게 나오게 된다.  
+
+여기서는 예시를 2 by 2 로 했으나 실제 논문에서는 7 by 7 을 하였다.
 
 ### RoI Align
 
+_RoI Align_ 에 대해서도 알아보자.  
+_RoI Pool_ 에서는 격자화된 grid 에 이미지 박스를 맞추느라 약간의 오차가 생긴다는 것을 눈치챌 수 있다.  
+이러한 오차를 줄이기 위해 고안한 방법이 바로 _RoI Align_ 이다.  
+이는 _RoI Pool_ 처럼 이미지 박스를 맞추는 과정 없이 해당 위치 그대로 사용하게 된다.
+
 ![cropping features roi align](./image34.png)
+
+우선 이미지를 _CNN_ 에 통과시켜 feature map 을 얻는다.  
+이번에는 snapping 과정을 거치지 않고 그대로 둔 상태에서 subregion 을 나눈다.  
+
+이 때, 각 subregion 에 대해 다시 subregion 을 나누게 되는데 위의 이미지에서 보다시피 각 subregion 에 4개의 점이 있는 것을 볼 수 있다.  
+이 점이 나타내는 값을 구하게 될 것인데, 이를 구하는 방법으로 _bilinear interpolation(쌍선형보간)_ 을 사용한다.
 
 ![cropping features roi align](./image35.png)
 
+하나의 초록색 점은 다음과 같이 _bilinear interpolation_ 으로 계산된다.  
+해당 점의 인접한 네 개의 grid cell 의 점수로부터 결과값이 나타나게 되는데,  
+
 ![cropping features roi align](./image36.png)
+
+$$
+f_{xy} = \sum_{i,j=1}^2f_{i,j}\max(0,1-|x-x_i|)\max(0,1-|y-y_j|)
+$$
+
+위와 같은 수식을 이용해 계산할 수 있다.  
 
 ![cropping features roi align](./image37.png)
 
+이렇게 각 값을 계산한 후 max-pool 을 통해 값을 추출한다.  
+마찬가지로 예시에서는 2 by 2 로 나왔지만 실제로는 7 by 7 로 진행되었다.
+
+조금 더 정리한 것은 [여기](./roi-pool-roi-align.pdf)에서 확인할 수 있다.
+
+
 ![rcnn vs fast rcnn](./image38.png)
+
+_RoI Pool_ 을 이용한 _Fast R-CNN_ 은 다음과 같이 20배 가량의 성능 향상을 이루어냈지만 region proposal 을 포함했을 경우가 포함하지 않았을 때보다 확실하게 느리다는 것을 확인할 수가 있다.
+
+이 문제를 해결하기 위한 방법 역시 존재하는데, __Region Proposal Network(RPN)__ 을 사용한 _Faster R-CNN_ 이 바로 그 모델이다.  
 
 ## Faster R-CNN
 
-![](./image39.png)
+![fatser rcnn](./image39.png)
 
-![](./image40.png)
+_Faster R-CNN_ 에서는 region proposal 을 위해 _RPN_ 을 사용하는데 이는 feature 들로부터 proposal 을 예측하는 네트워크 이다.
 
-![](./image41.png)
+그 외 나머지 구성은 _Fast R-CNN_ 과 동일하다.
 
-![](./image42.png)
+### Region Proposal Network
 
-![](./image43.png)
+_Region Proposal Network_ 에서는 __anchor box__ 라는 개념을 사용한다.
 
-![](./image44.png)
+![region proposal network](./image40.png)
 
-![](./image45.png)
+이 _anchor box_ 는 sliding window 의 각 위치에서 bounding box 의 후보로 사용되는 크기가 미리 정의된 상자이다.  
+
+그림에서 보다시피 3 by 3 anchor 를 사용할 수 있는데, 좀 더 자세히 언급하자면 3개의 종횡비과 3개의 크기를 가지는 anchor 를 사용했고 이는 총 9개의 anchor box 임을 알 수 있다.  
+이들 anchor box 는 같은 중심을 같는 것을 알고 넘어가자.
+
+![region proposal network](./image41.png)
+
+이러한 anchor 박스를 이용해 물체인지 아닌지는  
+
+1. 가장 높은 IoU(Intersection over Unit)를 가지는 anchor
+2. IoU > 0.7 을 만족하는 anchor
+
+로 positive labeling 처리를 해줄 수 있다.
+
+![region proposal network](./image42.png)
+
+positive box 에 대해서는 regression 을 통해 좀 더 정확한 위치를 찾을 수 있도록 해준다.
+
+![region proposal network](./image43.png)
+
+실제로 논문에서는 $k$ 개의 anchor box 를 이용해 물체/배경을 판단하는 $2k$ 개의 classification 출력과 $4k$ 개의 박스의 위치를 조정하는 regression 출력을 얻게 된다.  
+이 때 $k=9$ 이다.<small>위에서 언급한 3개의 종횡비(2:1, 1:1, 1:2), 3개의 크기(128, 256, 512)</small>
+
+![fatser rcnn test time speed](./image44.png)
+
+이렇게 만든 _Faster R-CNN_ 은 _Fast R-CNN_ 의 문제점인 region proposal 에서 효율적인 모습을 보이며 위와 같은 성능의 향상을 가지고 오게 되었다.
+
+![fatser rcnn](./image45.png)
+
+_Faster R-CNN_ 의 구조를 다시 한 번 봐보자.  
+이는 __Two-stage object detector_ 인데, 
+
+- first stage : 이미지당 한 번 작동
+- second stage : 영역(region)당 한 번 작동
+
+하게 된다.
+
+여기서 우리가 정말 second stage 가 필요한 것일까?
 
 ## Single-Stage Object Detectors
 
-![](./image46.png)
+한 번에 _Object Detection_ 을 수행하게 하면 어떨까?
 
-![](./image47.png)
+그런 관점에서 문제를 푸는 것이 바로 _Single-Stage Object Detection_ 이다.
 
-## Instance Segmenatation: Mask R-CNN
+![single stage object detectors](./image46.png)
 
-![](./image48.png)
+대표적으로 _YOLO_ 와 _SSD_ 가 있는데, 이들은 input image 한 번에 탐색하여 결과값을 출력하게 된다.  
+그림에서 보듯 7 by 7 grid 로 만든 후 base box 를 이용해 결과를 낸다.
 
-![](./image49.png)
+이 때 _R-CNN_ 계열과는 다르게 5개의 출력값이 나오는데, x, y, w, h 에 confidence 값이 추가되었기 때문이다.
 
-![](./image50.png)
+도식이 _RPN_ 과 비슷하게 나타났지만 single-stage 기법은 category-specific 하게 처리하는 것이 차이가 있다.
 
-![](./image51.png)
+![object detection](./image47.png)
 
-![](./image52.png)
+Object Detection 은 다양하게 변화가 가능한데 구조에 있어서 각기 변경할 부분들이 많이 있기 때문이다.  
+
+일반적으로 bigger/deeper backbone network 를 활용할 경우 성능이 좋게 나타난다.  
+
+그러나 항상 speed / accuracy 간의 trade-off 는 존재한다.
+
+## Instance Segmentation: Mask R-CNN
+
+이제 _Instance Segmentation_ 에 대해서 알아보자.  
+
+![mask rcnn](./image48.png)
+
+여기서 사용한 모델은 _Mask R-CNN_ 인데 mask network 를 각 RoI 에 추가해서 $28 \times 28$ 의 크기를 갖는 binary mask 를 생성하게 된다.
+
+![mask rcnn](./image49.png)
+
+그 구조는 다음과 같다.  
+
+이미지를 _CNN + RPN_ 에 통과시켜 region proposed 된 feature map 을 얻는다. 그 후 roi align 을 통해 $256 \times 14 \times 14$ 의 feature map 으로 만든 후 각각의 Class C 에 대한 mask 를 얻는다.
+
+![mask rcnn](./image50.png)
+
+예시를 보자.  
+각 물체에 대한 마스크는 다음과 같이 의자, 사람, 침대 등으로 나타날 수 있다.
+
+![mask rcnn](./image51.png)
+
+이렇게 구현된 _Mask R-CNN_ 의 성능은 상당히 놀라운데, 위의 결과를 보면 다양한 물체들에 대해 아주 잘 segmentation 한 것을 볼 수 있으며, 첫 번째 사진에서 멀리 뒤에 서있는 많은 사람들에 대해서도 segmentation 을 해낸 것을 볼 수 있다.
+
+![mask rcnn](./image52.png)
+
+또한 포즈에 대해서도 제대로 동작하는 것을 볼 수 있다.
 
 ## Aside
 
-![](./image53.png)
+그 외에도 다양하게 발전해나가고 있다.
 
-![](./image54.png)
+![dense captioning](./image53.png)
 
-![](./image55.png)
+object detection 과 captioning 을 결합해 dense captioning 이라고 하는 여러 물체에 대한 caption 을 나타낼 수도 있다.
 
-![](./image56.png)
+![dense captioning](./image54.png)
 
-![](./image57.png)
+이는 dense captioning 의 동작 과정이다.
 
-![](./image58.png)
+![scene graphs](./image55.png)
 
-![](./image59.png)
+장면에 대한 graph 연결을 실시하여 mapping 을 하는 노력도 있다.
 
-![](./image60.png)
+![3d object detection](./image56.png)
 
+이렇게 mapping 된 정보를 활용해 여러 caption 을 동시에 진행할 수도 있다.
 
+![3d object detection](./image57.png)
 
+3차원 물체에 대한 탐지도 가능한데, 2차원 물체에 대해서는 (x,y,w,h) 의 정보를 이용했다면, 3차원에 대해서는 (x,y,z,w,h,l,r,p,y) 로 더 많은 정보를 사용해 bounding box 를 구성하게 된다.
 
+![3d object detection](./image58.png)
+
+![3d object prediction](./image59.png)
+
+_Faster R-CNN_ 과 같은 원리지만 3차원 공간에서 proposal 을 진행하게 된다.
+
+![3d shape prediction](./image60.png)
+
+> 참고 : https://blog.lunit.io/2017/06/01/r-cnns-tutorial/
+  
 > 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 강의를 보고 공부한 포스트입니다.  
 > 잘못된 것이 있을 수 있습니다.  
 > 댓글로 알려주시면 감사합니다!  

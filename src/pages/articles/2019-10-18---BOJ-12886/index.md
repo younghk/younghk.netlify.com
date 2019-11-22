@@ -7,7 +7,10 @@ path: "/posts/boj-12886/"
 category: "BOJ"
 description: ""
 tags :
+  - PS
   - Algorithm
+  - C++
+  - BOJ
 ---
 
 문제 출처 : https://www.acmicpc.net/problem/12886
