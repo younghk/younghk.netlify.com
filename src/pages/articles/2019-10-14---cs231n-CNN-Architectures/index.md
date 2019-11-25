@@ -5,7 +5,7 @@ date: "2019-10-14T03:04:00.1234"
 layout: post
 path: "/posts/cs231n-lec9-cnn-architectures/"
 category: "Machine Learning"
-description: ""
+description: "cs231n lec 9 강을 보고 정리한 글입니다. CNN 구조에 대해 학습합니다."
 tags:
   - cs231n
   - Deep Learning

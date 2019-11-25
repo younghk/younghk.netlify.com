@@ -5,7 +5,7 @@ date: "2019-10-13T02:51:00.1234"
 layout: post
 path: "/posts/cs231n-lec8-training-neural-networks-part-2/"
 category: "Machine Learning"
-description: ""
+description: "cs231n lec 8 강을 보고 정리한 글입니다."
 tags:
   - cs231n
   - Deep Learning

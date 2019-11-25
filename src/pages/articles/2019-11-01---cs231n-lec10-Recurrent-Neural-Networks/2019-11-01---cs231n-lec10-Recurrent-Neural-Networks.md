@@ -10,7 +10,7 @@ tags:
     - Deep Learning
     - RNN
     - LSTM
-description: "RNN 에 대해 학습한다. 그리고 LSTM(Long Short Term Memory)를 알아보고 그 성능에 대해 간략히 살펴본다."
+description: "cs231n lec 10 강의를 보고 정리한 글입니다. RNN 에 대해 학습하고 LSTM(Long Short Term Memory)를 알아보고 그 성능에 대해 간략히 살펴봅니다."
 ---
 
 <small>최종 수정일 : 2019-11-19</small>

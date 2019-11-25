@@ -9,6 +9,7 @@ tags:
   - cs231n
   - Deep Learning
   - CNN
+description: "cs231n lec 5 강을 보고 정리한 글입니다."
 ---
 
 <small>최종 수정일 : 2019-10-12</small>

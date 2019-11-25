@@ -5,7 +5,7 @@ date: "2019-10-11 02:23:14"
 layout: post
 path: "/posts/cs231n-lec3-loss-functions-and-optimization/"
 category: "Machine Learning"
-description: ""
+description: "cs231n lec 3 강을 보고 정리한 글입니다."
 tags:
   - cs231n
   - Deep Learning
