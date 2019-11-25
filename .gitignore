@@ -9,3 +9,7 @@ gatsby-starter-lumen.iml
 
 # shell script
 *.sh
+
+# DS_Store
+src/pages/articles/*/.DS_Store
+.DS_Store
