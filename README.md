@@ -28,3 +28,4 @@ Required Features
 - [x] image thumbnail  
 - [ ] Search page
 - [ ] paging  
+- [ ] table align
