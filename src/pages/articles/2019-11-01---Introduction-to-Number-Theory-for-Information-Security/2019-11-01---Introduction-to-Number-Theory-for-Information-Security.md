@@ -288,7 +288,7 @@ $$
 다시 말해, $f(x) = x^3 + x + 1$ 은 GF(2) 에서 irreducible 이다.  
 이 말은 GF(2)에서 가능한 모든 다항식으로 $f(x)$ 를 나누어 떨어지게 만들 수 없다는 것이다.
 
-## Finite Fields of the Form GF($2^n$)
+## Finite Fields of the Form GF(2^n)
 
 조금 더 알아보자.  
 GF($2^3$)에서는 두 개의 prime polynomial 이 있다.
