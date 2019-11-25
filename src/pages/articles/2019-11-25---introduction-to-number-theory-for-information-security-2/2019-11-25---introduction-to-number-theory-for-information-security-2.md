@@ -1,5 +1,5 @@
 ---
-draft:     true
+draft:     false
 title:     "Introduction to Number Theory for Information Security 2"
 date:      "2019-11-25 21:17:12"
 layout:    post
@@ -174,9 +174,73 @@ $\displaystyle [1,n-1]$에서 임의의 $a$를 선택한다.
 
 ### Prime Distribution
 
+소수의 분포와 관련해서 대략적으로 ln(n) 만큼마다 소수가 하나씩 나온다고 한다.  
+그러나 이는 대략적인 것으로 아직까지 정확한 소수의 분포에 관련한 공식은 밝혀지지 않았다.
+
 ## The Chinese Remainder Theorem
 
+중국인의 나머지 정리는 어떤 쌍마다 서로소 자연수들에 대한 연립 합동식의 해의 유일한 존재에 대한 정리이다.  
+
+이는 어떤 수 M 으로 모듈러 연산을 했을 때의 결과값을 빠르게 구할 수 있게 해주는 정리인데, $M = m_1m_2...m_k$ 라면 다음과 같다.  
+
+1. $a_i = A \mod{m_i}$ 를 먼저 계산한다.
+2. $M_i = {M \over m_i}$ 일 때, $c_i = M_i \times \left( M_i^{-1} \mod{m_i} \right)$ 를 만족하는 $c_i$ 를 구한다.  
+3. 이 때, $A \equiv \left( \sum_{i=1}^ka_ic_i \right) \mod{M}$ 이 된다.  
+
+예제를 풀어보자.
+
+- $x \equiv 5 \mod{7}$, $x \equiv 3 \mod{11}$, $x \equiv 10 \mod{13}$ 일 때, $x \mod{1001}$?  
+- $x \equiv 2 \mod{3}$, $x \equiv 3 \mod{5}$, $x \equiv 2 \mod{7}$ 일 때, $x \mod{105}$?
+
+<small>894, 23</small>
+
+## Primitive Root
+
+원시근(Primitive Root)은 기약잉여계에서 모든 원소를 원시근의 거듭제곱으로 표현할 수 있게 만드는 원소이다. 위에서 살펴본 생성원(generator)을 다시 생각해보며 그 내용을 살펴보자.  
+
+오일러 정리(Euler's Theorem)에서 $a^{\phi(n)} \mod{n} = 1$ 이었다.  
+그렇다면 $a^m \mod{n}=1, (\ \gcd(a,n)$ 을 만족하는 $m$이 존재하고$\phi(n)$ 보다 작을 수도 있다.  
+
+이 때, $m = \phi(n)$ 인 경우, $m$ 이 원시근이 된다.  
+
+소수 p 에 대하여 primitive root 가 성공적으로 mod p 에 대한 group 을 만들어 낼 수 있다.  
+
+- $a, a^2, ... , a^{p-1}$ 이 모두 다르다.
+- 예를 들어, 소수 19 에 대한 원시근은 2, 3, 10, 13, 14, 15 이다.
+
+![powers mod 19](./image1.png)
+
+위의 표에서 보다시피, 소수 19 에 대한 원시근은 2, 3, 10, 13, 14, 15 임을 확인할 수 있다.  
+
+이러한 원시근은 모든 정수가 갖지는 않으며 $n = 2, 4, p^\alpha, 2p^\alpha$ 의 형태에 대해서만 존재함이 밝혀져있다.  
+이 때, $p$ 는 홀수인 소수이며, $\alpha$ 는 양의 정수이다.  
+
 ## Discrete Logarithms
+
+이산 로그(Discrete Logarithms)는 이산 대수라고도 하며, $a^x = b$ 꼴을 만족하는  $x$ 를 가리킨다.  
+
+이는 우리가 위에서 본 inverse problem 등에 대한 것과 같은 맥락을 지니게 되는데, 모듈러 연산에서 $b=a^i \mod{p}$ 을 만족하는 $i$ 를 구하는 것을 생각해보자.  
+
+이 때, $i = d\log_ab \mod{p} = d\log_{a,p} b$ 라 쓸 수 있다.  
+여기서 $a$ 는 원시근일 경우 $i$ 가 반드시 존재하게 되며 그렇지 않을 경우 존재하지 않ㅇ르 수 있다.  
+
+![discrete logarithm mod 19](./image2.png)
+
+위의 표는 모듈러 19 연산에 대한 원시근들의 이산 로그를 계산한 표이다.  
+
+이러한 이산 로그는 asymmetry property 를 가지게 된다.  
+이는,  
+
+- $y = g^x \mod{p}$ 라는 식이 주어질 때,
+- $g, x, p$ 가 주어진다면 $y$ 는 쉽게 구할 수 있으나,
+- $y, g, p$ 가 주어진다면 $x$ 는 구하기가 어렵다.
+
+이고, 아직까지 이산 로그를 효율적으로(다항시간 안에) 계산해내는 방법은 밝혀지지 않았다.  
+
+이러한 이산 로그는 이 후에 작성될 포스트의 주제들인 Diffie-Hellman Key Exchange, Digital Signature Algorithm(DSA), ElGamal Encryptyion 등의 public key algorithms 에 핵심적인 요소이다.  
+
+> 더 알아보기  
+> [이산 로그](http://www.secmem.org/blog/2019/05/17/이산-로그/)
 
 <small>최종 수정일: 2019-11-26</small>
 
