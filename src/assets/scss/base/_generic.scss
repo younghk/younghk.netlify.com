@@ -117,8 +117,9 @@ ul {
 }
 
 p {
-    @include line-height(1);
-    @include margin-bottom(1);
+    //@include line-height(1);
+    @include margin-bottom(0.5);
+    text-shadow: 0 0 1px rgba(0,0,0,.3)
 }
 
 blockquote {
