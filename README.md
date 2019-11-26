@@ -9,7 +9,7 @@ Gatsby 정적 페이지 제작 프레임워크를 사용해 제작한 블로그.
 이전 [블로그](https://younghk.github.io/)를 확인하실 수 있습니다.
 
 - Google Analytics 적용
-- blockquote 수정(copy 기능 추가)
+- code block 수정(copy 기능 추가)
 - KaTeX 로 수식 작성 가능([gatsby-remark-katex](https://www.gatsbyjs.org/packages/gatsby-remark-katex/))
 - gif 추가 가능([gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/?=copy-))
 - TOC(Table Of Contents) 기능 추가(포스트 오른쪽 상단에 반응형으로 표시)
@@ -29,3 +29,4 @@ Required Features
 - [ ] Search page
 - [ ] paging  
 - [ ] table align
+- [ ] blockquote style

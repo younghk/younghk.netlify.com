@@ -195,14 +195,17 @@ class PostTemplateDetails extends React.Component {
             
             {/* Category */}
             <div className="post-single__meta">
+                Category :: 
               <Link to={`/categories/${category}/`} className="post-single__meta-link">
                 {category}
               </Link>
-              <span>·</span>
+              {/*<span>·</span>*/}
               <em>
                 {/* moment(post.frontmatter.date).format('YYYY.MM.DD hh:ss') */}
               </em>
             </div>
+
+            <br />
 
             {/* Post Content */}
             <div

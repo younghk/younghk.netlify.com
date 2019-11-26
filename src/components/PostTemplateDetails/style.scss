@@ -41,9 +41,9 @@
         & figure {
             @include margin-bottom(1);
             & blockquote {
-                font-style: italic;
-                text-align: center;
                 margin-top: 0;
+                color: #999;
+                border-left: 4px solid hsla(0,0%,0%,0.13);
                 @include padding(1, 0);
                 & p {
                     max-width: $layout-post-single-width;
@@ -146,6 +146,23 @@
         & img {
             padding: 1rem 1rem;
         }
+
+        /* blockquote */
+        & blockquote {
+          margin-top: 0;
+          padding-left: calc(0.8125rem - 1px);
+          padding-right: 0;
+          padding-top: 0;
+          margin-bottom: 0.8125rem;
+          box-sizing: inherit;
+          color: #737373;
+          border-left: 4px solid hsla(0,0%,0%,0.13);
+          text-align: left;
+          font-style: normal;
+          & p {
+              max-width: $layout-post-single-width;
+          }
+      }
     }
     &__footer {
         max-width: $layout-post-single-width;
