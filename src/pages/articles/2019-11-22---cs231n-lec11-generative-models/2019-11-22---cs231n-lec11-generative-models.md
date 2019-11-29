@@ -541,11 +541,6 @@ decriminator/generator 를 번갈아서 같이 학습시키는 것은 상당히 
 
 기본적으로 이렇게 두 네트워크를 동시에 학습시키는 것 자체가 상당히 어려우며, 또한 loss landscape 에 관련한 이슈들 또한 학습 과정에 영향을 미친다.
 
-558
-01:03:13,815 --> 01:03:23,342
-좋은 loss landscapes를 위한 objectrive function
-을 설계하고 안정적으로 학습하기 위한 연구들도 아직 활발히 진행중입니다.
-
 ![training gans](./image47.png)
 
 앞서 언급했던 내용들을 종합해서 전체 GAN 학습 알고리즘을 살펴보자.  
