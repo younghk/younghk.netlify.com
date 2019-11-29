@@ -627,7 +627,7 @@ large CNN 아키텍쳐를 사용한 _GAN_ 의(_DCGAN_) 결과를 보면 상당�
 
 여기 이미지의 각 행들은 두 개의 랜덤 노이즈 $z$ 를 interpolation하여 이미지를 생성한 결과이다.
 
-이 결과를 보시면, 두 이미지간에 부드럽게 이미지가 변하는 것을 볼 수 있다.
+이 결과를 보면, 두 이미지간에 부드럽게 이미지가 변하는 것을 볼 수 있다.
 
 ![gan interpretable vector math](./image54.png)
 
