@@ -623,9 +623,9 @@ large CNN 아키텍쳐를 사용한 _GAN_ 의(_DCGAN_) 결과를 보면 상당�
 ![gan convolutional architectures](./image53.png)
 
 그리고 GAN이 어떤 일을 하려하는지 조금은 해석해보자.  
-여기에서는 $z$ 포인트를 두개 잡습니다. $z$ 는 두개의 random noise vector 다. 그리고 그 사이를 interpolate 한다.  
+여기에서는 $z$ 포인트를 두개 잡는다. $z$ 는 두개의 random noise vector 다. 그리고 그 사이를 interpolate 한다.  
 
-여기 이미지의 각 행들은 두 개의 램던 노이즈 $z$ 를 interpolation하여 이미지를 생성한 결과이다.
+여기 이미지의 각 행들은 두 개의 랜덤 노이즈 $z$ 를 interpolation하여 이미지를 생성한 결과이다.
 
 이 결과를 보시면, 두 이미지간에 부드럽게 이미지가 변하는 것을 볼 수 있다.
 
