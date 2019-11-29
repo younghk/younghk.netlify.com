@@ -624,6 +624,6 @@ print update_scale / param_scale # want ~1e-3
 이번 강의를 정리하면 training error 를 잡기 위해서는 _optimizer_ 와 _learning rate schedule_ 이 필요하며,  
 test error 를 잡기 위해서는 _regularization_ 을 이용하고 _hyperparmeter_ 를 적절히 선택함으로써 실현 가능하다.
 
-> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 강의를 보고 공부한 포스트입니다.  
+> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 8강 강의를 보고 공부 및 정리한 포스트입니다.  
 > 잘못된 것이 있을 수 있습니다.  
 > 댓글로 알려주시면 감사합니다!  

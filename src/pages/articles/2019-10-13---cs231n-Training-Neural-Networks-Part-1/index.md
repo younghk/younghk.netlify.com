@@ -361,6 +361,6 @@ _layer normalization_ 의 가정은 평균을 계산할 때 모든 채널이 __�
 - Weight Initialization(Xavier/He init)
 - Batch Normalization(권장함)
 
-> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 강의를 보고 공부한 포스트입니다.  
+> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 7강 강의를 보고 공부 및 정리한 포스트입니다.  
 > 잘못된 것이 있을 수 있습니다.  
 > 댓글로 알려주시면 감사합니다!  

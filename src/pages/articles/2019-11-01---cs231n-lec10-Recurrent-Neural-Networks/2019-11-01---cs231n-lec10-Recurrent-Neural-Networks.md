@@ -370,6 +370,6 @@ GRU 나 LSTM 에서 보여주는 gradient control 은 아주 유용한 방법이
 
 ![recent nlp](./image52.png)
 
-> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 강의를 보고 공부한 포스트입니다.  
+> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 10강 강의를 보고 공부 및 정리한 포스트입니다.  
 > 잘못된 것이 있을 수 있습니다.  
 > 댓글로 알려주시면 감사합니다!  
