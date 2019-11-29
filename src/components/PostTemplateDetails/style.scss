@@ -84,6 +84,24 @@
             & pre {
                 font-size: 0.9rem;
             }
+            .gatsby-highlight-code-line {
+              background-color: #022a4b;
+              display: block;
+              margin-right: -1em;
+              margin-left: -1em;
+              padding-right: 1em;
+              padding-left: 0.75em;
+              border-left: .35em solid #0687f0;
+            }
+            /* Adjust the position of the line numbers */
+            .line-numbers {
+              padding-left: 2.8em;
+            }
+            .line-numbers-rows {
+              padding: 1rem 0 0 0;
+              margin-left: auto;
+              border-right: .5px solid #999;
+            }
         }
         /* copy-code-button */
         & .copy-code-button {

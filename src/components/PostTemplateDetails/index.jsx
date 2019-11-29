@@ -10,6 +10,7 @@ import kebabCase from 'lodash/kebabCase'
 import "katex/dist/katex.min.css";
 
 //require(`katex/dist/katex.min.css`)
+require("prismjs/plugins/line-numbers/prism-line-numbers.css")
 
 class PostTemplateDetails extends React.Component {
   /* Table of Contents */
