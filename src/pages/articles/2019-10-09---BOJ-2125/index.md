@@ -39,7 +39,7 @@ description: ""
 5. 3과 4의 과정을 모두 통과한다면 _i_ 에서 _j_ 의 직선 거리를 계산해서 기억한다.
 6. 마음에 드는 최단 경로 알고리즘으로 시작점에서 끝점까지의 최단 경로를 계산한다.
 
-```cpp
+```cpp {numberLines: true}
 #include <iostream>
 #include <vector>
 #include <queue>

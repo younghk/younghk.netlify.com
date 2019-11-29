@@ -185,7 +185,7 @@ fully visible belief network 의 PixelRNN/PixelCNN 을 상기시켜보자.
 
 그렇다면 조금 자세히 살펴보기로 하자.
 
-#### vae intractability
+#### VAE Intractability
 
 ![vae intractability](./image22.png)
 

@@ -36,7 +36,7 @@ X+X 와 Y-X 로 각각 변화하는 숫자에 있어서 최대 최소는 각각 
 
 이것을 구현하는 방법은 다양할 수 있는데, 아래는 아주 대충 짠 코드이다.
 
-```cpp
+```cpp {numberLines: true}
 #include <iostream>
 #include <queue>
 #include <algorithm>

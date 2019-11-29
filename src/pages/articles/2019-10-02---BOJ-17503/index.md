@@ -28,7 +28,7 @@ description: "문제 출처 : https://www.acmicpc.net/problem/17503"
 
 코드는 다음과 같다.
 
-```cpp
+```cpp {numberLines:true}
 #include <iostream>
 #include <vector>
 #include <queue>
