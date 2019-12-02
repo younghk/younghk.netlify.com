@@ -15,7 +15,7 @@ tags:
 description: "공개키 방식의 다른 암호화 기법을 공부하고 정리한 포스트입니다."
 ---
 
-<small>최종 수정일: 2019-12-01</small>
+<small>최종 수정일: 2019-12-02</small>
 
 이전 [포스트](https://cheong.netlify.com/posts/public-key-cryptography-and-rsa/)에서 공개키와 _RSA_ 에 대해 학습했었다.  
 
