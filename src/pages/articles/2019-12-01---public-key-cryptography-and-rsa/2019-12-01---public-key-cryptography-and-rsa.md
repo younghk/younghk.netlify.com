@@ -190,17 +190,153 @@ M = 11^23 mod 187 = 88
 이러한 _RSA_ 는 'Square and Multiply' 알고리즘을 사용할 수 있다.  
 이는 exponentiation 을 효율적으로 처리하는 알고리즘으로, $O(\log_2n)$ 으로 동작한다.  
 
+이는 지수의 거듭제곱 꼴을 2의 거듭제곱 꼴로 반복해 표현하게 하는 것이다.  
+비트를 이용한 표현 방법이라고 생각해도 괜찮을 것 같다.  
+
+예를 들면 다음과 같다.  
+
 $$
 88^7 \mod{187} = (88^1 \mod{187})(88^2 \mod{187})(88^4 \mod{187})
 $$  
-
-위와 같은 방식이다.
 
 ### Efficient En/Decryption
 
 앞서 살펴보았듯 _RSA_ 는 $e$ 의 지수꼴로 암호화를 진행하기 때문에 위에서 본 알고리즘을 이용해 빠르게 계산할 수 있게된다.  
 
 $e=65537(2^{16}+1)$ 또는, $e=3, e=17$ 을 많이 사용하나, $e$ 가 작을 수록 공격당하기 쉬워진다.  
+
+다음의 상황을 생각해보자.
+
+세 명의 _RSA_ 유저가 $e=3$ 을 사용하고 각각 ($n_1, n_2, n_3$) 를 modulus 로 이용할 때,  
+
+- 어떤 한 유저가 message M 을 암호화해서 보내게 된다면 각각
+    - $C_1 = M^3 \mod{n_1}, C_2 = M^3 \mod{n_2}, C_3=M^3 \mod{n_3}$ 를 받게 된다.
+- $C_1 = M^3 \mod{n_1}, C_2 = M^3 \mod{n_2}, C_3=M^3 \mod{n_3}$ 를 받게 될 때, 한 명은 $M^3 \mod{(n_1, n_2, n_3)}$ 를 CRT 를 이용해 계산할 수 있다.  
+- _RSA_ 의 특징 중, $M^3 \lt n_1n_2n_3$ 이므로 $M^3$ 의 세제곱근을 구해서 $M$ 을 구할 수 있게 된다.
+
+만약 $e$ 가 고정되어 있다면, $\gcd(e, \phi(n)) = 1$ 이고 이는 어떤 $p, q$ 에 대해서도 $e$ 와 서로소가 아니게 된다.  
+
+복호화에는 거듭제곱에 대한 지수 d 를 이용한다. 마찬가지로 이는 매우 커야하는데, 그렇지 않다면 brute-force 공격에 의해 위험하게 된다.
+
+그러나 수가 크게 된다면 계산이 오래걸리게 되는데, 이를 해결하기 위해 CRT 를 이용해 mod p & q 를 각각 계산하고 나중에 합쳐서 워ㅓ너하는 답을 얻을 수 있게 된다.  
+
+$M = C^d \mod{n}$ 에 대해
+
+- $C^d \mod{p} = C^{d \mod{(p-1)}} \mod{p}$ 를 계산한다.
+- $C^d \mod{q} = C^{d \mod({q-1)}} \mod{q}$ 를 계산한다.
+- $C^d \mod{n}$ 을 CRT 를 통해 계산한다.
+
+이러한 방법을 이용하게 되면 바로 하는 것에 비해 3배 정도 빠르게 계산을 할 수 있게 된다.  
+
+이 때, private key 의 주인(p, q 의 값을 아는 사람)만이 이 방법을 사용할 수 있게 된다.
+
+자, 이제 다음의 예제를 한 번 풀어보자.
+
+> encryption M using RSA, n=33, e=7, M=20, C=?  
+>> C = 26  
+
+> 암호화를 했으면 이제 다시 복호화도 해보자.  
+
+이러한 _RSA_ 방식을 공격하기 위해서는 factorization(인수분해) 을 시도해야하는데, 아직 이를 효율적으로 하는 방법이 발견되지 않았다. 이로 인해 아직까지 _RSA_ 를 널리 사용하고 있는 것이다.  
+
+### RSA Key Generation
+
+_RSA_ 를 사용하는 유저는 반드시
+
+- random prime $p, q$ 를 사용해야하고
+- $e$ 또는 $d$ 를 선택해 다른 한 쪽을 계산해야한다.
+
+이 때, $n=p \times q$ 이게 되는데, $p, q$는 간단한 소수이면 안된다.  
+즉, 충분히 커야한다는 뜻이고, 이를 통해 보안성을 높여야 한다.  
+이렇게 높아진 보안성은 probabilitistic test 로 추측되어질 수 있다.  
+
+그리고 $e, d$ 에 대한 거듭제곱의 형태로 값이 계산되기 때문에 이를 다시 계산하기 위해 inverse algorithm 을 이용해야한다.
+
+### RSA Security
+
+자, 그렇다면 이제 _RSA_ 를 공격할만한 방법들에 대해 생각해보자.
+
+1. Brute-foce key search - 큰 사이즈에 대한 수에는 적합하지 않다.
+2. Mathematical attacks - $\phi(n)$ 과 modulus $n$ 을 계산하는 것이 쉽지 않다.
+3. Timing attacks - 복호화 단계에서 시도해볼만 하다. 이는 side channel attack 이다.
+4. Chosen ciphertext attacks - _RSA_ 는 그 특성상 해당 공격에 vulnerable 하다.
+
+#### Factoring Problem
+
+앞서 살펴본 4개의 공격 방법 중, 2번째인 Mathematical attack 에 대해서 조금 더 자세히 살펴보자.  
+이 방법은 3가지로 나뉠 수 있는데, 
+
+1. $n=p \times q$ 이므로, $\phi(n)$ 를 계산하고 $d = e^{-1} \mod{\phi(n)}$ 를 구하는 방법이다. 즉, $p, q$ 를 먼저 구한다.
+2. $p, q$ 를 구하지 않은 상태로 $\phi(n)$ 을 먼저 구하고 $d = e^{-1} \mod{\phi(n)}$ 를 계산한다.
+3. $d$ 를 직접적으로 바로 계산한다.
+
+이 세 가지 경우에 대한 difficulty 는 모두 비슷한 수준이다.
+
+이는 factoring 을 수행하는데 있어서 그 난이도가 모두 같다고 보기 때문이다.  
+
+인수분해는 큰 수 $n$ 이 있을 때, 그리고 이 수가 큰 소수들로 이루어져있을 때 굉장히 어렵다.  
+
+그러나 점차 풀이 방법들이 발전하고 있어서 엄청나게 어려운 일은 아니게 되었다.  
+
+- Lattice Sieve(격자체)를 활용하면 200자리 수도 계산이 가능하다
+- 알고리즘 발전 : Quadratic Sieve(QS) -> Generalized Number Field Sieve(GHFS) -> Lattice Sieve(LS)
+- 오늘날에는 1024 - 2048 bits 의 키가 _RSA_ 에서 안전하다고 생각한다.
+
+#### Timing Attack
+
+이제 시간차 공격에 대해서 조금 더 살펴보자.  
+
+이는 연산을 하는데 있어서 시간을 밝혀냄으로써 그 미세한 차이를 활용해 공격하는 방식이다.  
+이는 하나의 ciphertext only attack 이 된다.  
+
+이러한 공격을 막는 방법으로 시간을 indistinguishable 하게 만드는 방법이 있다.
+
+- 일정한 시간이 걸리게끔 통일
+- random delay 를 발생
+- 계산에 사용되는 값을 blind
+
+#### Chosen Ciphertext Attacks
+
+앞서 얘기했듯 _RSA_ 는 Chosen Ciphertext Attack(CCA) 에 취약하다.  
+
+이는 _RSA_ 의 property 를 ciphertext 로부터 추출해 cryptanalysis 가 가능하도록 할 수 있기 때문이다.  
+이는 다음의 식으로부터 나타난다.
+
+$$
+E(PU, M_1) \times E(PU, M_2) = E(PU, [M_1 \times M_2])
+$$
+
+Decrypt $C = M^e \mod n$
+
+- $X = \left( C \times 2^e \right) \mod n$
+- $X$ 를 Chosen ciphertext 로 제출하고 $Y=X^d \mod n = (C \times 2^e)^d \mod n = ((2M)^e)^e \mod n = 2M \mod n$ 을 얻는다.  
+- Deduce $M$
+
+이러한 CCA 를 방어하는 방법은 다음과 같을 수 있다.
+
+- random pad of plaintext
+    - 그러나 CCA 를 더 복잡하게 시도한다면 이는 불충분한 대응책이 된다.
+- Optimal Asymmetric Encryption Padding(OAEP)
+    - RSA Security Inc. 에서 개발한 것으로
+    - Feistel network 의 형태를 이용해 asymmetric encryption 전에 plaintext 를 처리하는 방식이다.
+
+![oaep](./image6.png)
+
+OAEP 를 이용해 homomorphism(동질성)을 제거할 수 있게 된다.
+
+<hr />
+
+_RSA_ 를 뚫기 위해 다음과 같은 공격 방식들도 있다.
+
+- Coppersmith's attack
+    - factorization of RSA Moduli
+- Bleichenbacher attack
+    - Adaptive CCA attack againt PKCS#1 v1.5
+    - Practical attack against SSL/TLS server
+- Manger's attack
+    - Asaptive CCA against PKCS#1 v2.0 RSA-OAEP encryption
+
+논문을 조금 더 읽어보도록 하자.
 
 > 본 포스트는 _정보보호_ 를 공부하며 정리한 글 입니다.  
 > 잘못된 내용이 있다면 알려주세요!  
