@@ -3,7 +3,7 @@ draft:     false
 title:     "[cs231n-lec10] Recurrent Neural Networks"
 date:      "2019-11-01 17:27:23"
 layout:    post
-path:      "/posts/cs231n-lec10-Recurrent-Neural-Networks/"
+path:      "/posts/cs231n-lec10-recurrent-neural-networks/"
 category:  "Machine Learning"
 tags: 
     - cs231n
