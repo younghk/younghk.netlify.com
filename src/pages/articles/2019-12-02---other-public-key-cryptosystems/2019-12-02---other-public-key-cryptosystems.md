@@ -269,7 +269,108 @@ ECC 는 자주 사용되는 암호화 기법인데, key 의 size 가 작아도 �
 
 ECC 는 elliptic curve logarithm problem 에 의존적이며, 이는 $kP, P$ 가 주어졌을 때 $k$ 를 구해야하는 문제이다.  
 
+이 ECC 를 빠르게 구하는 방법은 'Pollard rho method' 라는 것이 있다.<small>나중에 자세히 알아보자</small>
+
+위에서도 언급했듯이 key 의 사이즈가 작아도 효과적인데, 이는 IoT 같은 제한적인 resource 밖에 사용하지 못하는 경우에 좋다.  
+
+같은 길이에 대해서는 계산의 복잡성이 비슷해지기는 한다.  
+
+그러므로 비슷한 보안성에 있어서는 ECC 가 굉장한 computational advantage 를 가지고 온다고 할 수 있다.  
+
+Symmetric scheme (key size in bits)|ECC-based scheme (size of n in bits)|RSA/DSA (modulus size in bits)
+:---:|:---:|:---:|
+56|112|512
+80|160|1024
+112|224|2048
+128|256|3072
+192|384|7680
+256|512|15360
+
+### Forward Secrecy in TLS
+
+forward secrecy 는 private key 가 중간에 reveal 되더라도 향후의 session key 들이 compromised 되지 않게 하는 것이다.  
+
+여기서 잠깐 TLS 1.2 버전 까지의 key agreement protocol 을 살펴보고 가자.
+
+1. RSA 
+    - server 가 private key 를 보호할 때까지만 안전함
+    - forward secure 없음
+2. Ephemeral DH(DHE) 또는 Elliptic Curve DH(ECDHE)
+    - compromised 될 경우 public key 를 버림
+    - forward secure
+
+위의 문제점으로 인해 RSA-based key agreement protocol 은 TLS 1.3 에서 삭제되었다.
+
+조금 더 자세히 살펴보자.  
+
+만약 key 가 compromised 되면 공격자 입장에서 new client 로 접근이 가능해지고 이는 향후의 접속(forward privacy)들이 안전하지 않은 것이다.  
+
+DHE 에서는 C.S 가 random 하므로 한군데서 뚫려도 다음 것이 이전 것을 쓰지 않으므로 각각의 session 은 independent 해서 안전하게 된다.
+
+자세히 알아보고 싶다면 TLS Handshake Protocol 을 참조하자.  
+
 ## Pseudorandom Number Generation
+
+_PRNG(Pseudorandom Number Generation)_ 를 이용해 암호화를 진행할 수 있다.  
+
+우선, random 에는 truly/pseudo 두 가지가 있는데, 앞서 우리는 truly random 이 implement 하는 것이 불가능하다는 것을 배웠다.  
+그래서 우리는 pseudo-random 을 사용하게 되는데, 이는 deterministic algorithm 이 필요하다.
+
+Asymmetric encryption algorithm 은 random output 을 만들어내는 것을 상기해보자.  
+그렇다면 이를 이용해 _PRNG_ 를 만들어 볼 수 있을 것이다.  
+
+그러나 이는 symmtric algorithm 보다는 느리다.  
+그래서 마찬가지로 이를 통해서 만들어내는 것은 짧은 암호화 데이터(ex. key)가 된다.  
+
+이 때, RSA 또는 ECC 기반의 PRNG 를 사용하게 된다.  
+
+### Random Numbers
+
+이러한 random data 는
+
+1. statistically random, uniform distribution, independent
+2. Unpredictability 를 가져서 이전 값으로 다음 값을 예측할 수 없어야 함
+
+위 두 가지 사항을 만족시켜야 한다.  
+
+### PRNG
+
+언급했듯이 결정론적 알고리즘을 이용해 종종 랜덤(pseudo-random) 넘버를 만들어내게 되는데, 이렇게 만들어 낸 수가 많은 randomness test 를 통과할 수 있다.  
+
+![prng](./image3.png)
+
+RSA, ECC 기반 PRNG 뿐 아니라 Block Cipher 를 이용한 PRNG 도 있다.  
+
+![prng based on block ciphers](./image4.png)
+
+마스터 키로부터 세션 키를 만들어내는데 종종 사용한다.
+
+CTR : $X_i = E_k[V_i]$  
+OFB : $X_i = E_k[X_{i-1}]$
+
+![prng based on rsa](./image5.png)
+
+RSA 기반 PRNG 의 모습이다.  
+
+이 때, 전부 다 재사용하는 것이 아니라 r most significan bits 만 다음 라운드에 이용되는 것과, k least significant bits 만 각 라운드에서 추출된 pseudorandom no. 임을 확인하자.
+
+ECC 기반 PRNG 는 어떨까?  
+
+해당 알고리즘은 다음과 같다.  
+
+```
+for i = 1 to k do
+    set s_i = x(s_{i-1}P)
+    set r_i = lsb_240(x(s_{i}Q))
+end for
+return r1, ..., rk
+```
+
+이러한 ECC 기반의 PRNG 는 시스템에 이미 ECC 가 구현되어있을 때만 가능하다.  
+
+<hr>
+
+<small>꽤 어렵고 대충 넘어간 부분들이 많은데 관련 논문들을 확인해서 추가적으로 공부하도록 하자!</small>
 
 > 본 포스트는 _정보보호_ 를 공부하며 정리한 글 입니다.  
 > 잘못된 내용이 있다면 알려주세요!  
