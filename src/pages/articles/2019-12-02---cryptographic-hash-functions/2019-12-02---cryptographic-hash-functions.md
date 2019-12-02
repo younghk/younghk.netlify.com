@@ -1,5 +1,5 @@
 ---
-draft:     true
+draft:     false
 title:     "Cryptographic Hash Functions"
 date:      "2019-12-02 16:02:28"
 layout:    post
