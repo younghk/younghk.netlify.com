@@ -1,5 +1,5 @@
 ---
-draft:     true
+draft:     false
 title:     "Message Authentication Code"
 date:      "2019-12-03 08:26:33"
 layout:    post
