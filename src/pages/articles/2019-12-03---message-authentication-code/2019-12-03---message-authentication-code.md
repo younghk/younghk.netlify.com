@@ -22,7 +22,8 @@ description: "Message Authentiation Code(MAC) 에 대해 간략하게 정리한 
     - Message encryption
     - Message authentication code(MAC)
 
-- Requirements
+- Requirements  
+
     Attacks|Measures
     :---:|:---:
     Disclosure<br />Traffic analysis | Message hiding (e.g., encryption)
@@ -169,7 +170,7 @@ _HMAC_ 은 다음의 설계 목표를 가지고 있다.
 이러한 _HMAC_ 은 message 에 대해 hash function 을 사용하게 된다.  
 
 $$
-\text{HMAC}_K(M) = \text{Hash}\left[\left(K^+ \text{XOR } \text{opad}\right)\ ||\ \text{Hash}\left[\left(K^+ \text{XOR} \text{ipad}\right)\ ||\ M\right]\right]
+\text{HMAC}_K(M) = \text{Hash}\left[\left(K^+ \text{ XOR } \text{opad}\right)\ ||\ \text{Hash}\left[\left(K^+ \text{ XOR } \text{ipad}\right)\ ||\ M\right]\right]
 $$
 
 - 여기서 $K^+$ 는 key 가 왼쪽에 b-bit 만큼의 zero-pad 를 가진 것이다.  
