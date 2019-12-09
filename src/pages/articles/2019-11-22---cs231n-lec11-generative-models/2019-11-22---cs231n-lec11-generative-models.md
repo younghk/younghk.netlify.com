@@ -15,6 +15,10 @@ description: "스탠포드 2019년 cs231n 11강 강의를 보고 정리한 포�
 
 <small>최종 수정일 : 2019-11-29</small>
 
+> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 11강 강의를 보고 공부 및 정리한 포스트입니다.  
+> 잘못된 것이 있을 수 있습니다.  
+> 댓글로 알려주시면 감사합니다!  
+
 지금까지 우리는 지도학습 모델(Supervised Learning Model) 에 대해 주로 학습했다.  
 이제는 생성 모델(Generative Model) 이라고 하는 비지도학습 모델(Unsupervised Learning Model)의 한 종류에 대해서 알아보자.
 
@@ -690,7 +694,3 @@ _GAN_ 의 장점은 generator 가 생성한 데이터의 퀄리티가 SOTA라는
     - ___SOTA___
     - 학습하기 까다롭고 너무 불안정
     - VAE와는 달리 inference queries가 불가능
-
-> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 11강 강의를 보고 공부 및 정리한 포스트입니다.  
-> 잘못된 것이 있을 수 있습니다.  
-> 댓글로 알려주시면 감사합니다!  

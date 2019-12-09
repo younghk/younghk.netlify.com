@@ -16,6 +16,10 @@ description: "스탠포드 cs231n lec-12 강의를 보고 정리한 포스트 �
 
 <small>최종 수정일 : 2019-11-22</small>
 
+> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 12강 강의를 보고 공부 및 정리한 포스트입니다.  
+> 잘못된 것이 있을 수 있습니다.  
+> 댓글로 알려주시면 감사합니다!  
+
 ## Computer Vision Tasks
 
 ![computer vision tasks](./image1.png)
@@ -422,7 +426,3 @@ _Faster R-CNN_ 과 같은 원리지만 3차원 공간에서 proposal 을 진행�
 ![3d shape prediction](./image60.png)
 
 > 참고 : https://blog.lunit.io/2017/06/01/r-cnns-tutorial/
-  
-> 이 포스트는 스탠포드의 [cs231n](http://cs231n.stanford.edu) 12강 강의를 보고 공부 및 정리한 포스트입니다.  
-> 잘못된 것이 있을 수 있습니다.  
-> 댓글로 알려주시면 감사합니다!  
