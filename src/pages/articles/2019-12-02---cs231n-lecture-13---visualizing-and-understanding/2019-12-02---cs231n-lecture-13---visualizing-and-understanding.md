@@ -250,14 +250,12 @@ Gradient Ascent를 위해서는 초기 이미지가 필요하다.
 
 달마시안의 경우에는 달마시안의 특징이 아주 잘 나타난 것을 확인할 수 있다.
 
-![gradient ascent](./image18.png)
-
 여기서 색상이 무지개 색인 이유는 _Gradient Ascent_ 가 unconstrained value 이기 때문에 0~255 의 pixel value 로 normalize 하면서 나타나는 오류라고 볼 수 있다.  
 
 > regularization term 이 없이 할 경우에도 이미지는 나타날 것이나 이는 random noise 처럼 보이게 된다.  
 > 그러나 이는 또 다른 의미를 갖는데 곧 확인해보자.
 
-![gradient ascent](./image19.png)
+![gradient ascent](./image18.png)
 
 L2 norm 에다가 주기적으로 Gaussian blur 를 적용하는 방법도 있다.  
 그리고 값이 작은 픽셀들은 0 으로 만들고, gradient 가 작은 값도 0 으로 만든다.  
@@ -265,85 +263,319 @@ L2 norm 에다가 주기적으로 Gaussian blur 를 적용하는 방법도 있�
 
 이렇게 만든 방법은 훨씬 더 깔끔한 이미지를 위와 같이 얻게 만들어준다.  
 
+![gradient ascent](./image19.png)
+
+이러한 방법을 최종 스코어에만 적용하는 것이 아니라 중간 뉴런을 최대화시키는 이미지를 생성해 볼 수도 있다.  
+
+여기서 이미지가 큰 것은 receptive field 가 크다는 것을 의미한다.  
+
 ![gradient ascent](./image20.png)
 
+이는 Multimodality 도 최적화 과정 속에서 다루고 있다.  
+위의 이미지들은 식료품점(grocery store)으로 labeling 되어 있다.  
+
+여기서 각 class 마다 clustering algorithm 을 수행한다.  
+한 class 내에서  서로 다른 mode 들끼리 다시 class 가 나뉜다.  
+그리고 나뉜 mode 들과 가까운 곳으로 초기화를 해주게 된다.  
+
+위의 식료품점 이미지는 매우 다른 것을 볼 수 있다.  
+
+많은 클래스들이 이렇게 multimodality를 가지고 있는데, 이미지를 생성할 때 이런 식으로  multimodality를 명시하게 되면 아주 좋은(다양한) 결과를 얻을 수 있게 된다.
+
 ![gradient ascent](./image21.png)
+
+위의 이미지들은 ImageNet 의 특정 클래스를 최대화하는 이미지를 생성해 낸 결과물이다.
+
+이를 가능하게 하는 방법은 FC6 를 최적화하는 것이다.
+
+이는 feature inversion network 등을 사용해야한다.  
+<small>논문을 읽어보자... 요점은 이미지 생성 문제에서 사전 지식(priors)를 추가하게 된다면 리얼한 이미지를 만들 수 있다는 점이다.</small>
 
 ## Fooling Image / Adversarial Examples
 
 ![fooling image](./image22.png)
 
+이러한 기법을 응용하게 되면 네트워크를 속이는 이미지를 만들어 낼 수 있다.  
+
+위의 코끼리 사진이 거의 차이가 없어보이지만 코알라로 인식되는 것이 보이는가?  
+
+이는 추후에 조금 더 자세히 다루도록 하겠다.  
+
 ## DeepDream
+
+이제 재미난 것들을 보자.  
+
+_DeepDream_ 은 구글에서 발표한 것으로, 재미있는 이미지를 만들기 위해 고안되었다.  
+
+사람이 꿈을 꾸면서 환상(hallucination)같은 것을 보는 느낌과 비슷하도록 이미지를 만들기도 한다고 해서 이와 같은 이름이 붙여졌다.  
+
+추가적으로 모델이 이미지의 어떤 특징들을 찾고 있는지도 살짝 확인이 가능하다.  
 
 ![deepdream](./image23.png)
 
+_DeepDeram_ 에서는 입력 이미지를 _CNN_ 의 중간 레이어를 어느정도 통과시키게 된다.
+
+그리고 backprop 을 하게 되는데 해당 레이어의 gradient 를 activation 값으로  설정한다.
+
+그리고 backprop 을 하여 이미지를 업데이트하는 과정을 반복한다.
+
+이러한 행동은 네트워크에 의해 검출된 해당 이미지의 특징들을 증폭시키려는 것으로 해석할 수 있다.
+
+해당 레이어에 어떤 특징들이 있던지 그 특징들을 gradient 로 설정하면 이는 네트워크가 이미지에서 이미 뽑아낸 특징들을 더욱 증폭시키는 역할을 하게 된다.
+
+그리고 이는 해당 레이어에서 나온 특징들의 L2 norm을 최대화시키는 것으로 볼 수 있다.
+
 ![deepdream](./image24.png)
 
-![](./image25.png)
+코드는 굉장히 간결하다.  
+몇 가지 트릭이 있는데, 
 
-![](./image26.png)
+1. gradient 를 계산하기에 앞서 이미지를 조금 움직임(jitter)  
+    - regularization 의 역할로 이미지를 부드럽게 만듦
+2. L1 normalization 사용  
+    - 이미지 합성에서 유용함
+3. clipping  
+    - pixel 이 이미지로 표현되기 위해서 값은 0~255 사이어야 함.
 
-![](./image27.png)
+![deepdream](./image25.png)
 
-![](./image28.png)
+위와 같은 방법으로 하늘 이미지에
 
-![](./image29.png)
+![deepdream](./image26.png)
 
-![](./image30.png)
+이런식으로 무늬를 넣어보거나(얕은 층의 레이어)
 
+![deepdream](./image27.png)
+
+뭔가 요란한 이미지를 만들어 낼 수도 있다.(깊은 층의 레이어)
+
+![deepdream](./image28.png)
+
+이러한 이미지들이 많이 발견되는 것을 볼 수 있다.  
+강아지가 좀 많은 데이터셋인 것 같다.  
+
+<small>실제로 ImageNet(위의 예제)에는 1000개의 카테고리가 존재하는데 그 중 200개가 __개__ 이다.</small>
+
+![deepdream](./image29.png)
+
+![deepdream](./image30.png)
+
+이러한 _DeepDream_ 은 multi scale processing 을 진행하게 되는데, 작은 이미지로 _DeepDream_ 을 수행한 후 점차 이미지를 늘려나가고, 최종 스케일로 수행 후에는 다시 처음부터 반복하게 된다.  
+
+이렇게 반복적으로 해서 도출해 낸 이미지가 위의 예제 들이다.
 
 ## Feature Inversion
 
+또 다른 방법으로 네트워크의 다양한 레이어에서 이미지의 어떤 요소들을 포착하는지 알아보자.
 
-![](./image31.png)
-![](./image32.png)
+![feature inversion](./image31.png)
+
+_Feature Inversion_ 의 방법은 다음과 같다.
+
+- 이미지를 네트워크에 통과시킨다.
+- 통과시킨 특징인 activation map 을 저장한다.
+- 특징을 가지고 이미지를 재구성한다.
+
+이렇게 재구성되는 이미지를 볼 때 이미지의 어떤 정보가 특징 벡터에서 포착되는지 알 수 있다.  
+
+이 역시 regularization 으로 gradient ascent 를 사용한다.
+
+여기서는 score 를 최대화시키는 것이 아닌 특징 벡터간 거리를 최소화하는 방법으로 진행한다.  
+
+이는 기존에 계산해 놓은 특징 벡터와, 새롭게 생성한 이미지로 계산한 특징벡터 간의 거리를 측정하는 것이다.
+
+total variation regularizer 라고 하는 것을 사용하는데, 이것이 인접 픽셀 간의 차이에 대한 패널티를 부여한다.
+
+이를 통해 생성된 이미지가 자연스럽게 된다.
+
+![feature inversion](./image32.png)
+
+코끼리와 과일 이미지를 _VGG-16_ 에 통과시키는 예제를 생각해보자.  
+
+relu2-2 를 거친 특징 벡터로 재구성하면 거의 완벽한 이미지가 복원되는 것을 볼 수 있다.  
+
+조금 더 깊은 곳은 어떨까?  
+
+공간적인 구조는 많이 유지되고 있으나 디테일이 많이 약해지고 모호해졌다.  
+
+이처럼 낮은 레벨의 디테일들은 네트워크가 깊어질 수록 소실되는 것을 확인할 수 있다.  
 
 ## Texture Synthesis
 
-![](./image33.png)
+texture(질감?) 합성(synthesis)에 대해서도 간략히 살펴보자.  
 
-![](./image34.png)
+![texture synthesis](./image33.png)
 
-### Gram Matrix
+위의 예시처럼 입력 패턴에 대해 유사한 패턴이 더 큰 이미지로 나타나게 만드는 것이다.  
 
-![](./image35.png)
+![texture synthesis](./image34.png)
 
-![](./image36.png)
+이를 해결하기 위해 Nearest Neighbor 를 활용할 수 있다.  
+위에서 보다시피 꽤 좋은 성능이 나오는 것을 알 수 있다.
 
-### Neural Texture Synthesis
+그러나 이는 간단한 텍스쳐에 대해서 성립하는 것으로, 신경망 없이 복잡한 텍스쳐는 상황이 많이 다르다.
 
-![](./image37.png)
+### Neural Texture Synthesis : Gram Matrix
 
-![](./image38.png)
+![neural texture synthesis gram matrix](./image35.png)
 
-## Neural Style Transfer
+2015년 신경망을 이용해 텍스쳐 문제를 푸려는 시도가 있었다.  
+이는 앞서 배운 gradient ascent 와 비슷한데, _Gram Matrix_ 에 대해 알아보자.  
 
-![](./image39.png)
+자갈 사진으로 예시를 들어보자.
 
-![](./image40.png)
+이 사진을 네트워크에 통과시킨 후, 네트워크 특정 레이어의 특징 맵($C \times H \times W$)을 가져온다.  
+여기서 $H \times W$ 그리드는 공간 정보를 나타낸다.  
 
-![](./image41.png)
+$H \times W$ 의 한 점에 있는 C차원 특징 벡터는 해당 지점에 존재하는 이미지의 특징을 담고 있다고 할 수 있다.
 
-![](./image42.png)
+이제 이 특징 맵을 가지고 입력 이미지의 texture descriptor 를 계산할 것이다.
 
-![](./image43.png)
+우선 특징 맵에서 서로 다른 두 개의 특징 벡터를 뽑아내는데, 각 특징 열 벡터는 C차원 벡터이다.
 
-![](./image44.png)
+이 두 벡터의 외적(outer product)을 계산해서 $C \times C$ 행렬을 만든다.
 
-![](./image45.png)
+이 $C \times C$ 행렬은 이미지 내 서로 다른 두 지점에 있는 특징들 간의 co-occurrence 를 담고 있다.
 
-![](./image46.png)
+$C \times C$ 행렬의 (i, j) 번째 요소의 값이 크다는 것은 두 입력 벡터의 i번째, j번째 요소가 모두 크다는 의미이다.
 
-![](./image47.png)
+이를 통해 서로 다른 공간에서 동시에 활성회되는 특징이 무엇인지 2차 모멘트를 통해 어느정도 포착해 낼 수 있는 것이다.  
+이 과정을 H x W 그리드에서 전부 수행해주고, 결과에 대한 평균을 계산해보면 $C \times C$ _Gram Matrix_ 를 얻게 된다.
+
+이 결과를 입력 이미지의 텍스처를 기술하는 texture descriptor 로 사용한다.
+
+![gram matrix](./image36.png)
+
+이러한 Gram matrix 는 주변 공간 정보를 모두 날려버린다.<small>(이미지의 각 지점에 해당하는 값들을 모두 평균화 시킴)</small>
+
+그 대신에 특징들 간의 co-occurrence 만을 포착해 내고 있다.  
+이 방법은 계산이 아주 효율적인데, $C \times H \times W$ 차원의 3차원 텐서가 있다고 해도 행렬을 $C \times (HW)$ 로 바꾼 다음에 한 번에 계산하므로써 매우 효율적인 모습을 보이게 된다.
+
+> 왜 제대로된 공분산 행렬을 쓰지 않고 이런 _gram matrix_ 를 사용할까?  
+>> 공분산 행렬을 써도 잘 동작하나 이는 계산 cost 가 너무 크다.
+
+자 이제 texture desrciptor 를 만들었으니 이미지를 생성해보자.  
+이는 gradient ascent procedure 와 유사한 과정을 거친다.
+
+텍스처 합성도 앞서 본 특징 재구성(feature reconstruction)와 유사하다.
+
+다만 입력 이미지의 특징맵 전체를 재구성하기 보다는 gram matrix를 재구성하도록 하는 차이가 있다.
+
+![neural texture synthesis](./image37.png)
+
+자 이제 실제로 이루어지는 과정을 정리해보자.
+
+1. 실제로 거치는 단계는, 우선 pretrained model를 다운로드 받는다.<small>(_VGG_ 가 많이 쓰임.)</small>
+2. 이미지를 VGG에 통과시키고 다양한 레이어에서 gram matrix를 계산한다.
+3. 생성해야 할 이미지를 랜덤으로 초기화한다.
+4. 원본 이미지와 생성된 이미지의 gram matrix 간의 차이를 L2 norm을 이용해 Loss로 계산한다.
+5. Loss 를 backprop 을 통해 생성된 이미지의 픽셀의 gradient 를 계산
+6. gradient ascent 를 통해 이미지의 픽셀을 업데이트 합니다.
+7. 위 과정을 반복.
+
+![neural texture synthesis](./image38.png)
+
+위의 예제를 보면 texture 에 대해 _Gram Matrix_ 를 이용한 texture 합성을 볼 수 있다.  
+
+- 얕은 레이어에서는 색상은 유지하나 공간적 구조는 잘 살리지 못한다.
+- 깊은 레이어를 보면 큰 패턴들을 잘 재구성하는 것을 볼 수 있다.
+
+### Neural Style Transfer
+
+![neural style transfer](./image39.png)
+
+이제 텍스쳐 합성을 예술 작품에 적용해보자.
+
+_gram matrix_ 를 이용한 텍스처 합성을 Starry night(Van Gogh) 이나 Muse(Picasso)를 텍스처 입력으로 사용하면 어떻게 될까?
+
+![neural style transfer](./image40.png)
+
+결과를 보면 예술 작품의 아주 흥미로운 부분들을 재구성해 내는 모습을 볼 수 있다.
+
+![neural style transfer](./image41.png)
+
+Content Image 는 네트워크에게 최종 이미지가 __어떻게 생겼으면 좋겠는지__ 를 말한다.
+그리고 Style Image는 최종 이미지의 __텍스처가 어땠으면 좋겠는지__ 을 알려준다.
+
+- 최종 이미지는 content image 의 feature reconstruction loss 를 최소화
+- Style image 의 gram matrix loss 도 최소화
+
+이 두가지 Loss를 동시에 활용하면, style image 화풍의 content image 가 만들어진다.
+
+이를 위해 최종 출력 이미지를 random noise 로 초기화 시킨 후, 네트워크에 content/style image 를 통과시켜 _Gram Matrix_ 와 feature map 을 계산한다.  
+
+![neural style transfer](./image42.png)
+
+반복된 backprop 과 _gradient ascent_ 를 통해 아름다운 결과 이미지를 얻을 수 있다.  
+
+![neural style transfer](./image43.png)
+
+_Style Transfer_ 는 _DeepDream_ 에 비해 조정해야할 부분이 많다.  
+
+![neural style transfer](./image44.png)
+
+다양한 style image 를 적용해 볼 수 있다.
+
+![neural style transfer](./image45.png)
+
+Content/Style loss 를 joint loss 로 사용하기 때문에 이를 적절히 조절하면 어디에 초점을 둘 것인지 선택이 가능해진다.(hyperparameter)
+
+![neural style transfer](./image46.png)
+
+위의 예시는 같은 Content/Style image 에 대해 style image 의 size 만 다르게 설정한 경우이다.  
+
+이 밖에도 _DeepDream_ 에서 살펴본 Multi scale processing 을 통해 고해상도 이미지를 얻을 수도 있다.  
+
+![neural style transfer](./image47.png)
+
+동시에 여러장의 style image 를 이용해 style loss 의 _Gram Matrix_ 를 계산하는 방법도 있다.
 
 ### Fast Style Transfer
 
-![](./image48.png)
+그러나 이러한 _Style Transfer_ 의 단점은 속도가 아주 느리다는 것이다.  
+이렇게 이미지를 만들기 위해서는 backprop/forward 를 굉장히 많이 해야하는데, 필연적으로 느려질 수 밖에 없게 된다.  
 
-![](./image49.png)
+이를 해결하는 방법에 대해 알아보자.
 
-![](./image50.png)
+![fast style transfer](./image48.png)
 
-![](./image51.png)
+바로 _Style Transfer_ 를 위한 네트워크를 학습시키는 방법이다.  
 
-![](./image52.png)
+여기서는 Style Image 를 고정시켜놓는다.  
+
+즉, 합성하고자 하는 이미지의 최적화를 전부 수행하는 것이 아니라 Content image 만을 입력으로 받아서 결과를 출력할 수 있는 단일 네트워크를 학습시키는 방법이다.
+
+학습 시 content/style loss 를 동시에 학습시키고 네트워크의 가중치를 업데이트하게 된다.
+
+학습은 오래 걸릴 수 있으나 그 후 이미지를 네트워크에 통과시키면 결과가 바로 나오게 된다.
+
+![fast style transfer](./image49.png)
+
+아주 잘 나오는 것을 확인할 수 있다.
+
+![fast style transfer](./image50.png)
+
+여러 개의 스타일을 동시에 돌려볼 수도 있다.
+
+알고리즘을 조금 변형한 방법도 있다.
+
+앞서 보여드린 이 네트워크는 앞서 배웠던 segmentation 네트워크와 아주 유사하게 생겼다.
+
+> Sementic segmentation 에서는 다운 샘플링을 여러 번 진행하고 transposed conv로 업샘플링을 한다.  
+> Segmentic segmentation과 다른 점이라고는 출력이 RGB 이미지라는 점이다.  
+> 그리고 네트워크 중간에 batch norm이 들어갑니다.  
+> 이 논문에서는 batch norm 대신에 instance norm 을 사용해서 더 좋은 결과를 끌어낸다.
+
+![fast style transfer](./image51.png)
+
+지금까지의 방식들의 단점은 네트워크 하나당 하나의 _Style Transfer_ 만이 가능하다는 것이다.  
+
+그러나 최근 구글에 의해 하나의 네트워크로 다양한 _Style Transfer_ 가 가능한 방법이 고안되었다.  
+
+Content/Style image 를 동시에 넣는 방식으로 다양한 스타일을 만들어내게 된다.  
+이는 아주 강력해서 실시간으로도 동작할 수 있다.  
+뿐만 아니라, style blending 도 가능해 서로 다른 스타일들을 섞어서 표현 가능하게 만들어주기도 한다.  
+
+![fast style transfer](./image52.png)
+
+각 스타일이 자연스럽게 변화하는 것을 확인할 수 있다.  
