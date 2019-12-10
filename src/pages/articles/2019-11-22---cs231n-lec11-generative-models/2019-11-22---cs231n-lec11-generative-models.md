@@ -335,7 +335,7 @@ MNIST 예제를 통해 자세히 살펴보자. _VAE_ 를 MNIST로 학습시키�
 
 앞서 $z$ 가 데이터의 잠재적인 속성(latent factor)들을 나타낼 수 있다고 했다.  
 $z$ 에는 우리가 해석할 수 있을만한 다양한 의미가 담길 수 있다.  
-여기 data manifold가 있습니다. 2차원 $z$ 공간입니다.  
+여기 data manifold가 있습니다. 2차원 $z$ 공간이다.  
 2차원 $z$ 분포에서 적절한 백분위 범위에서 Vary $z_1$ 과 Vary $z_2$ 를 뽑아낸 것이다.
 
 오른쪽 이미지는 $z_1$ 과 $z_2$ 의 조합으로 생성된 이미지이다.  
@@ -363,7 +363,7 @@ _VAE_ 로 생성한 이미지들을 조금 더 살펴보자.
 
 지금까지 살펴본 것 처럼 일반적으로 _VAE_ 가 이미지들을 잘 생성해 내기는 하지만
 
-가장 큰 단점이 있다면 _VAE_ 로 생성한 이미지들은 원본에 비해서 흐릿(blurry)하다는 점입니다.  
+가장 큰 단점이 있다면 _VAE_ 로 생성한 이미지들은 원본에 비해서 흐릿(blurry)하다는 점이다.  
 
 이 문제는 지금도 아주 활발히 연구되는 중이다.
 
@@ -439,8 +439,8 @@ discriminator 는 실제/가짜 이미지를 구별할 수 있어야 한다.
 
 discriminator 의 출력은 이미지가 진짜(real)인지 가짜(fake)인지 말한다.
 
-_GAN_ 의 아이디어는 discriminator 가 아주 잘 학습이 되서 진짜인지 가까인지를 아주 잘 구별할 수 있다면 generator 는 discriminator 를 속이기 위해서 더 실제같은
-가까 이미지를 만들 수 있어야 한다는 것이다.
+_GAN_ 의 아이디어는 discriminator 가 아주 잘 학습이 되서 진짜인지 가짜인지를 아주 잘 구별할 수 있다면 generator 는 discriminator 를 속이기 위해서 더 실제같은
+가짜 이미지를 만들 수 있어야 한다는 것이다.
 
 이를 통해 우리는 아주 좋은 generative model을 만들 수 있다.
 
@@ -455,12 +455,12 @@ _GAN_ 의 아이디어는 discriminator 가 아주 잘 학습이 되서 진짜�
 반면 Discriminator network 인 D의 파라미터인 $\theta_d$ 는 최대화시켜야 한다.  
 
 이 objective function 을 살펴보자.  
-우선, 데이터에 대한 Expectation $\mathbb{E}\log{D(x)}$ 가 있다.  
+우선, 데이터에 대한 Expectation 인 $\mathbb{E}\log{D(x)}$ 가 있다.  
 $\log{D(x)}$ 는 실제(real) 데이터 x에 대한 discriminator의 출력 값이다.
 
-$\log{D(x)}$ 는 실제 데이터(x)가 데이터 분포 p_data에 속할 likelihood 이다.
+$\log{D(x)}$ 는 실제 데이터(x)가 데이터 분포 $p_data$ 에 속할 likelihood 이다.
 
-두 번째 항을 보자. $p(z)$ 를 따르는 $z$ 에 대한 기댓값(expectation)에서 $z ~ p(z)$ 의 의미는 generator 에서 샘플링한다는 의미이다.  
+두 번째 항을 보자. $p(z)$ 를 따르는 $z$ 에 대한 기댓값(expectation)에서 $z \sim p(z)$ 의 의미는 generator 에서 샘플링한다는 의미이다.  
 그리고 $D(G(z))$ 는 생성된 가짜 이미지($G(z)$)에 대한 discriminator 의 출력이다.
 
 그렇다면 가짜 이미지인 $G(z)$에 대한 discriminator 의 출력은 무엇일까?
@@ -505,24 +505,24 @@ Generator 를 학습시키는 경우에는 오른쪽 항만 있으면 된다.
 generator 는 $1 - D(G(x))$ 의 값이 높을수록 좋다.  
 
 그 그래프의 모양을 보자.  
-우리는 Loss가 최소가 되길 원하는데 Loss의 기울기가 오른쪽으로 갈수록 점점 커진다.
+우리는 Loss가 최소가 되길 원하는데 Loss 의 기울기가 오른쪽으로 갈수록 점점 커진다.
 
-$D(G(x))$ 가 1에 가까울수록 기울기도 크다는 의미입니다.
+$D(G(x))$ 가 1에 가까울수록 기울기도 크다는 의미이다.
 즉, discriminator 가 generator 를 잘 속이고 있으면 그레이언트도 점점 더 커진다는 의미이다.  
 
 반면 생성된 샘플이 좋지 않을때, 즉 generator 가 아직은 잘 학습되지 않은 경우라면 discriminator 가 쉽게 구분할 수 있는 상태이므로 X 축 상에서 0 근처인 상태이다.  
 
-이 지점에서는 그레디언트가 상대적으로 평평한 것을 확인할 수 있다.
+이 지점에서는 gradient 가 상대적으로 평평한 것을 확인할 수 있다.
 
 이것이 의미하는 바는, gradient 가 generator 생성을 이미 잘 하고 있는 지역에만 몰려있다는 의미를 나타낸다.  
 
-하지만 샘플이 안좋은 경우에 더 학습을 더 많이 할 수 있어야(=gradient 가 커야) 한다.
+하지만 샘플이 안좋은 경우에 학습을 더 많이 할 수 있어야(=gradient 가 커야) 한다.
 
 ![training gans](./image46.png)
 
 이러한 이유로, generator 를 학습시키는 상당히 어렵다. 학습 능력을 향상시키기 위해서는
 
-그레디언트를 개선시키기 위해서 objective function 을 조금 변경해줘야 한다.  
+gradient 를 개선시키기 위해서 objective function 을 조금 변경해줘야 한다.  
 
 genrator 에서도 gradient ascent 를 이용할 것이다.
 앞서 수식에서처럼 discriminator 가 정답을 잘 맞출  likelihood 를 최소화 시키는 방법 대신에 discriminator 가 틀릴 likelihood 를 최대화 시키는 쪽으로 학습시키게된다.
@@ -532,7 +532,7 @@ genrator 에서도 gradient ascent 를 이용할 것이다.
 우하단 그래프에 이제 음수가 붙어야 한다.$(-\log{D(G(x))}$
 
 이제는 Generator를 최적화할 때 flip object function을 최대화시킨다.  
-그래프의 왼쪽의 그레디언트가 커졌다.(안 좋은 샘플을 생성하고 있는 부분)  
+그래프의 왼쪽의 gradient 가 커졌다.(안 좋은 샘플을 생성하고 있는 부분)  
 그리고 좋은 샘플들을 생성해내고 있는 부분인 오른쪽이 더 평평해 졌다.
 
 따라서 안좋은 샘플들을 만들어내는 곳에서 더 많은 학습이 이루어질 수 있게 된 것이다.
@@ -558,7 +558,7 @@ $p(z)$ 에서 미니배치만큼 노이즈를 샘플링한다. 그리고 학습 
 
 샘플링한 노이즈를 generator 에 통과시키면 가짜 이미지가 생성된다.  
 그러면 미니배치 만큼의 가짜 이미지와 미니배치 만큼의 진짜 이미지가 준비된다.  
-discriminator 의 그레디언트를 계산할 때 이렇게 준비한 진짜/가짜 이미지를 사용한다.  
+discriminator 의 gradient 를 계산할 때 이렇게 준비한 진짜/가짜 이미지를 사용한다.  
 
 그리고 discriminator 파라미터를 업데이트한다.
 그리고 discriminator 를 k step 만큼 학습시킨다.
@@ -681,7 +681,7 @@ _GAN_ 의 장점은 generator 가 생성한 데이터의 퀄리티가 SOTA라는
 
 ![generative model summary](./image61.png)
 
-2019년 cs231n 11강 Generative Modles 를 정리하면 다음과 같다.
+2019년 cs231n 11강 Generative Models 를 정리하면 다음과 같다.
 
 1. PixelRNN/CNN
     - explicit density model

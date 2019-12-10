@@ -244,7 +244,7 @@ grid 는 현재 격자화된 상태이기 때문에 박스를 snap 하여 grid �
 
 ![cropping features roi pool](./image33.png)
 
-이를 적당히 4등분(rougly equal subregion)하여 max-pool 을 진행하면 2 by 2 region 이 새롭게 나오게 된다.  
+이를 적당히 4등분(roughly equal subregion)하여 max-pool 을 진행하면 2 by 2 region 이 새롭게 나오게 된다.  
 
 여기서는 예시를 2 by 2 로 했으나 실제 논문에서는 7 by 7 을 하였다.
 
@@ -334,7 +334,7 @@ positive box 에 대해서는 regression 을 통해 좀 더 정확한 위치를 
 ![fatser rcnn](./image45.png)
 
 _Faster R-CNN_ 의 구조를 다시 한 번 봐보자.  
-이는 __Two-stage object detector_ 인데, 
+이는 __Two-stage object detector__ 인데, 
 
 - first stage : 이미지당 한 번 작동
 - second stage : 영역(region)당 한 번 작동
