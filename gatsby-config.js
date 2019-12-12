@@ -74,6 +74,12 @@ module.exports = {
         name: 'pages',
       },
     },
+    {
+      resolve: 'gatsby-plugin-netlify-cache',
+      options: {
+        cachePublic: true
+      }
+    }
     /*{
       resolve: 'gatsby-plugin-feed',
       options: {
