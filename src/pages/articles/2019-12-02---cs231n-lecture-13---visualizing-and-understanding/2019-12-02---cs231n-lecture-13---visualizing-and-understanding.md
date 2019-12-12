@@ -413,13 +413,13 @@ texture(질감?) 합성(synthesis)에 대해서도 간략히 살펴보자.
 이를 해결하기 위해 Nearest Neighbor 를 활용할 수 있다.  
 위에서 보다시피 꽤 좋은 성능이 나오는 것을 알 수 있다.
 
-그러나 이는 간단한 텍스쳐에 대해서 성립하는 것으로, 신경망 없이 복잡한 텍스쳐는 상황이 많이 다르다.
+그러나 이는 간단한 텍스쳐에 대해서 성립하는 것으로, 신경망 없이 복잡한 텍스쳐는 만들기에 많이 힘들다.
 
 ### Neural Texture Synthesis : Gram Matrix
 
 ![neural texture synthesis gram matrix](./image35.png)
 
-2015년 신경망을 이용해 텍스쳐 문제를 푸려는 시도가 있었다.  
+2015년 신경망을 이용해 텍스쳐 문제를 풀려는 시도가 있었다.  
 이는 앞서 배운 gradient ascent 와 비슷한데, _Gram Matrix_ 에 대해 알아보자.  
 
 자갈 사진으로 예시를 들어보자.

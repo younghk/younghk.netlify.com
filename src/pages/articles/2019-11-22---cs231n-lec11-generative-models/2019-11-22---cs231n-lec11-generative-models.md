@@ -413,7 +413,7 @@ _GAN_ 에서는 고차원의 학습 분포로부터 샘플링을 진행하는 �
 그러나 이 고차원의 학습 분포를 직접 하는 방법은 없다.
 이에 대한 해결책으로 단순한 분포(Gaussian 같은 random noise)로부터 샘플을 만들어 볼 수는 있고, 여기서 학습한 분포로부터 변환(transformation)하는 것을 배우고 싶은 것이다. 이 때 이 complex transformation 을 표현하기 위해 neural network 를 이용하게 된다.  
 
-_GAN_ 에서는 입력으로 random noise 벡터($z$)를 받는다. 벡터의 차원 수 우리가 직접 명시해준다.  
+_GAN_ 에서는 입력으로 random noise 벡터($z$)를 받는다.  
 그리고 입력z가 생성 네트워크를 통과하면 학습 분포로부터 직접 샘플링된 값을 출력한다.
 
 따라서 모든 random noise 입력이 학습 분포의 샘플에 매핑되길 원하는 것이다.
@@ -460,7 +460,8 @@ $\log{D(x)}$ 는 실제(real) 데이터 x에 대한 discriminator의 출력 값�
 
 $\log{D(x)}$ 는 실제 데이터(x)가 데이터 분포 $p_data$ 에 속할 likelihood 이다.
 
-두 번째 항을 보자. $p(z)$ 를 따르는 $z$ 에 대한 기댓값(expectation)에서 $z \sim p(z)$ 의 의미는 generator 에서 샘플링한다는 의미이다.  
+두 번째 항을 보자. $p(z)$ 를 따르는 $z$ 에 대한 기댓값(expectation)에서 $z \sim p(z)$ 의 의미는 generator network 에서 샘플링한다는 의미(sample latent code z from Gaussian distribution)
+이다.  
 그리고 $D(G(z))$ 는 생성된 가짜 이미지($G(z)$)에 대한 discriminator 의 출력이다.
 
 그렇다면 가짜 이미지인 $G(z)$에 대한 discriminator 의 출력은 무엇일까?
