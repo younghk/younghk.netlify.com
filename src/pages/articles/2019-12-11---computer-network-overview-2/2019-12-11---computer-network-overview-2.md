@@ -1,5 +1,5 @@
 ---
-draft:     false
+draft:     true
 title:     "Computer Network Overview Part 2"
 date:      "2019-12-11 17:41:09"
 layout:    post
@@ -57,7 +57,7 @@ _ARP_ 는 수동과 동적(dynamic)으로 mapping 이 가능하다.
 
 sender 에서 receiver 로 packet 을 전송하기 위해서는 서로의 주소를 알고 있어야 한다. 이 때, 같은 네트워크에 있는 것을 안다면(network prefix 를 검사)
 
-![routing table](./image2.png)
+![routing table](./image2.png?nf_resize=fit&h=400)
 
 1. 이 때 sender 는 ARP table 을 보고 receiver 의 MAC address 를 알아 내려고 한다. 그러나 초기에는 비어있을 것이고, 이 때 lan1 port 로 ARP request 를 보내서 receiver 의 MAC address 를 구하고자 하게 된다.  
 2. ARP request 는 broadcast 로 진행된다 하였으므로 위의 예제에서는 1.1.1. 의 네트워크의 모든 기기가 ARP request 를 수신하게 된다.(같은 네트워크 기기이므로)
